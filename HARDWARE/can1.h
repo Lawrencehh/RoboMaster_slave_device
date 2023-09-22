@@ -18,6 +18,7 @@ void setMotorTargetAcspeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void setMotorTargetDespeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void setMotorTargetPosition_2(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1);
+void readEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1);
 
 typedef struct
 {
@@ -43,7 +44,7 @@ extern int16_t receive[4];
 extern int16_t adc_U,cap_error;
 extern int32_t round_6020_yaw;
 extern float phase_6020_yaw;
-extern double currentPosition;
+extern int32_t currentPosition[12];
 extern double currentSpeed;
 extern double current;
 

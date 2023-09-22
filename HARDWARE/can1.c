@@ -20,7 +20,7 @@
 int flag;
 int16_t receive[4];
 int16_t adc_U;
-double currentPosition=0;
+int32_t currentPosition[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 double currentSpeed=0;
 double current=0;
 
@@ -124,10 +124,79 @@ void CAN1_RX0_IRQHandler(void)
 			
 				switch (rx_message.StdId)
         {
+					case 0x01:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x02:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
 					case 0x03:   //id
 					{
-           currentPosition= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						if(rx_message.Data[0]==0x04){
+							currentPosition[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
 					}break;	
+					case 0x04:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x05:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x06:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x07:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x08:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x09:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x0A:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x0B:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					case 0x0C:   //id
+					{
+						if(rx_message.Data[0]==0x04){
+							currentPosition[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+						}
+					}break;	
+					
 					case 0x201:   //ÊÖ²¿µç»ú
 					{
 						Chasis_201_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
@@ -228,8 +297,7 @@ void Chasis_ESC_Send(int16_t current_201,int16_t current_202,int16_t current_203
 
 
 // Õâ¸öº¯ÊýÓÃÓÚ·¢ËÍµ×ÅÌµç»úµÄËÙ¶ÈÄ¿±êÖµ¡£
-void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)//±¨ÎÄ·¢ËÍ
-	
+void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)//±¨ÎÄ·¢ËÍ	
 {
     CanTxMsg tx_message;
   
@@ -249,7 +317,6 @@ void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)//±
 
 // ÉèÖÃµç»úÄ¿±êµçÁ÷Öµ
 void setMotorTargetCurrent(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
-	
 {
     CanTxMsg tx_message;
   
@@ -302,6 +369,20 @@ void setMotorTargetDespeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
     tx_message.Data[3] = D3;
 	  tx_message.Data[4] = D4;
     tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+// ÉèÖÃµç»úÄ¿±ê¼õËÙ¼ÓËÙ¶È
+void readEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1)	
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
     CAN_Transmit(CAN1,&tx_message);
 }
 
