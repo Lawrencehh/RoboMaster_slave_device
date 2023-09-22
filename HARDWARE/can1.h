@@ -6,11 +6,18 @@
 void CAN1_Init(void);
 void CAN1_TX_IRQHandler(void);
 void CAN1_RX0_IRQHandler(void);
-void Chasis_ESC_Send(int16_t current_201,uint16_t ctlValue);
-void Gimbal_ESC_Send(int16_t current_205,int16_t current_206,int16_t current_208);
-void Gimbal_ESC_Send_minpitch(int16_t current_205,int16_t current_206,int16_t current_207,int16_t current_208);
+void Chasis_ESC_Send(int16_t current_201,int16_t current_202,int16_t current_203,int16_t current_204);
+void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void motorEnable(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void setMotorTargetSpeed_2(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void motorEnable_2(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void Gun_ESC_Send(int16_t current_201);
-void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4);
+void setMotorTargetPosition(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void setMotorTargetCurrent(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void setMotorTargetAcspeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void setMotorTargetDespeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void setMotorTargetPosition_2(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
+void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1);
 
 typedef struct
 {
@@ -30,11 +37,14 @@ typedef struct
 
 extern Chasis_ID_t Chasis_201_t,Chasis_202_t,Chasis_203_t,Chasis_204_t,Bodan_208_t;
 extern Gimbal_ID_t Gimbal_205_t,Gimbal_206_t,Gimbal_207_t,Gimbal_208_t;
-
+extern int ENABLE_yes;
 extern int flag;
 extern int16_t receive[4];
 extern int16_t adc_U,cap_error;
 extern int32_t round_6020_yaw;
 extern float phase_6020_yaw;
+extern double currentPosition;
+extern double currentSpeed;
+extern double current;
 
 #endif

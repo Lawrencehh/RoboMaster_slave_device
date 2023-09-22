@@ -12,4 +12,5 @@ void tmr2_callback(void *p_tmr, void *p_arg);
 
 extern float Camera_Inc_Pitch,Camera_Inc_Yaw,Camera_Distance;
 extern u8 NewData_flag;
+extern int32_t snake_motor_position[12];
 #endif

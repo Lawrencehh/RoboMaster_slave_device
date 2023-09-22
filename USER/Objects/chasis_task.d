@@ -29,6 +29,7 @@
 .\objects\chasis_task.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 .\objects\chasis_task.o: ..\HARDWARE\can2.h
 .\objects\chasis_task.o: ..\HARDWARE\uart1.h
+.\objects\chasis_task.o: ..\HARDWARE\uart3.h
 .\objects\chasis_task.o: ..\TASK\task.h
 .\objects\chasis_task.o: ..\HARDWARE\sys.h
 .\objects\chasis_task.o: ..\UCOS-III\uCOS_CONFIG\includes.h

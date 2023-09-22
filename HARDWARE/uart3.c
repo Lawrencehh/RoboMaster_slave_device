@@ -134,7 +134,7 @@ uint8_t function_code;      // 功能码
 
 // 初始化电机信息数组，每个绳驱电机有一个地址和一个速度
 // 假设最多有12个电机（单臂蛇形连续体）
-int16_t snake_motor_speed[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	// 存放12个绳驱电机的速度控制指令
+int32_t snake_motor_position[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	// 存放12个绳驱电机的速度控制指令
 
 
 
@@ -152,13 +152,14 @@ void USART3_IRQHandler(void)
 			return;
 		}
 		
+		
 		// 清除溢出标志
 		if (USART_GetFlagStatus(USART3, USART_FLAG_ORE) != RESET)//防止接受数据太快导致溢出
 		{  	
-		//清除中断标志    		 
-		(void)USART3->SR;   
-		(void)USART3->DR;
-		return;			
+				//清除中断标志    		 
+				(void)USART3->SR;   
+				(void)USART3->DR;
+				return;			
 		}
 		
     // 检查接收中断标志
@@ -204,8 +205,8 @@ void USART3_IRQHandler(void)
 												uint8_t motor_address;	// 定义电机地址字段
 												for (uint8_t i = 0; i < motor_count; ++i) {
 														motor_address = rx_buffer[offset++]-1;	// 取得电机地址数据
-														snake_motor_speed[motor_address] = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
-														offset += 2;
+														snake_motor_position[motor_address] = (rx_buffer[offset] << 24) | (rx_buffer[offset + 1] << 16) | (rx_buffer[offset + 2] << 8) | rx_buffer[offset + 3];
+														offset += 4;
 												}
 										}
 										

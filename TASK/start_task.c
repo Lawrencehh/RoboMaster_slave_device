@@ -205,13 +205,16 @@ void Init_task(void *p_arg){
 	 
 		NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//中断分组配置
   	User_GPIO_Init();
-//		TEL_USART1_Init();			  	//遥控配置
-		MPU_Init1(); 
-   	PS2_Init();
-  	PS2_SetInit();
 		CAN1_Init();                //CAN总线配置
+		motorEnable(0x03,0x06,0x01,0x10,0x00,0x00,0x00,0x01);
+	  setMotorTargetCurrent(0x03,0x06,0x01,0x08,0x00,0x00,0x07,0xd0);
+		setMotorTargetSpeed(0x03,0x06,0x01,0x09,0x00,0x00,0x2a,0xaa);
+	  setMotorTargetAcspeed(0x03,0x06,0x01,0x0B,0x00,0x10,0xAA,0xAA);
+	  setMotorTargetDespeed(0x03,0x06,0x01,0x0B,0x00,0x10,0xAA,0xAA);
+		delay_us(600000);
+	
 	  CAN2_Init();                //CAN2总线配置
-//		MPU6050_42mm_Gyro_calibration();
+
 		TX2_USART3_Init();       //TX2通信
 		
 	  TIM2_PWM_Init();
@@ -219,11 +222,11 @@ void Init_task(void *p_arg){
 	  TIM5_PWM_Init();
 	  TIM8_PWM_Init();
 //		//Heat_PWM_Init();
-//	  USART6_init();     //陀螺仪的串口
+	  USART6_init();     // 串口6初始化
   	
 	
 
-//		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
+		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
 	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
 //		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);

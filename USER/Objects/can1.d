@@ -59,3 +59,4 @@
 .\objects\can1.o: ..\HARDWARE\mpu6050_42mm\sys.h
 .\objects\can1.o: ..\HARDWARE\mpu6050_42mm\mpu6050.h
 .\objects\can1.o: ..\HARDWARE\delay.h
+.\objects\can1.o: ..\HARDWARE\uart3.h

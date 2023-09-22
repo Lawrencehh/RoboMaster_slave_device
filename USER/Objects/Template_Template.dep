@@ -116,7 +116,7 @@ I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x53DBAFAE)
 F (..\TASK\gimbal_task.c)(0x6506BBD9)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\gimbal_task.o --omf_browse .\objects\gimbal_task.crf --depend .\objects\gimbal_task.d)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\USER\stm32f4xx.h)(0x5B2F8926)
 I (..\STM32\CORE\core_cm4.h)(0x527B7158)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E3CC2)
@@ -176,12 +176,12 @@ I (..\HARDWARE\mpu6050_42mm\sys.h)(0x53B52F60)
 I (..\HARDWARE\mpu6050_42mm\mpu6050.h)(0x5CB0C1F2)
 I (..\HARDWARE\delay.h)(0x5447C0B8)
 I (..\HARDWARE\pstwo.h)(0x5DCBF76E)
-I (..\HARDWARE\uart3.h)(0x5C44C756)
+I (..\HARDWARE\uart3.h)(0x650D1112)
 I (..\HARDWARE\pwm.h)(0x5DCFB172)
 I (..\HARDWARE\imu.h)(0x5C9EDAFE)
 I (..\HARDWARE\gpio.h)(0x5B3A1F32)
-F (..\TASK\chasis_task.c)(0x6506B872)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\chasis_task.o --omf_browse .\objects\chasis_task.crf --depend .\objects\chasis_task.d)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+F (..\TASK\chasis_task.c)(0x650D0F2A)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\chasis_task.o --omf_browse .\objects\chasis_task.crf --depend .\objects\chasis_task.d)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\USER\stm32f4xx.h)(0x5B2F8926)
 I (..\STM32\CORE\core_cm4.h)(0x527B7158)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E3CC2)
@@ -210,6 +210,7 @@ I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x53DBAFAE)
 I (..\HARDWARE\can2.h)(0x5D4633DE)
 I (..\HARDWARE\uart1.h)(0x5D2C9280)
+I (..\HARDWARE\uart3.h)(0x650D1112)
 I (..\TASK\task.h)(0x6174F555)
 I (..\HARDWARE\sys.h)(0x5B2E424E)
 I (..\UCOS-III\uCOS_CONFIG\includes.h)(0x544E4300)
@@ -272,7 +273,7 @@ I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x53DBAFAE)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\TASK\task.h)(0x6174F555)
 I (..\HARDWARE\sys.h)(0x5B2E424E)
 I (..\UCOS-III\uCOS_CONFIG\includes.h)(0x544E4300)
@@ -310,8 +311,8 @@ I (..\HARDWARE\pwm.h)(0x5DCFB172)
 I (..\HARDWARE\imu.h)(0x5C9EDAFE)
 I (..\HARDWARE\gpio.h)(0x5B3A1F32)
 I (..\HARDWARE\Judge_System.h)(0x5D2823CE)
-F (..\TASK\start_task.c)(0x6506E05C)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\start_task.o --omf_browse .\objects\start_task.crf --depend .\objects\start_task.d)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+F (..\TASK\start_task.c)(0x650BAB2E)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\start_task.o --omf_browse .\objects\start_task.crf --depend .\objects\start_task.d)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\USER\stm32f4xx.h)(0x5B2F8926)
 I (..\STM32\CORE\core_cm4.h)(0x527B7158)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E3CC2)
@@ -371,7 +372,7 @@ I (..\HARDWARE\mpu6050_42mm\sys.h)(0x53B52F60)
 I (..\HARDWARE\mpu6050_42mm\mpu6050.h)(0x5CB0C1F2)
 I (..\HARDWARE\delay.h)(0x5447C0B8)
 I (..\HARDWARE\uart1.h)(0x5D2C9280)
-I (..\HARDWARE\uart3.h)(0x5C44C756)
+I (..\HARDWARE\uart3.h)(0x650D1112)
 I (..\HARDWARE\usart69050.h)(0x5CC1A442)
 I (..\HARDWARE\pwm.h)(0x5DCFB172)
 I (..\HARDWARE\imu.h)(0x5C9EDAFE)
@@ -1563,7 +1564,7 @@ I (..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView\os_cpu.h)(0x544C80C
 I (..\UCOS-III\uC-LIB\lib_math.h)(0x52736048)
 I (..\UCOS-III\uCOS_CONFIG\app_cfg.h)(0x544BA652)
 I (..\UCOS-III\UCOS_BSP\bsp.h)(0x544B6ECC)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\TASK\task.h)(0x6174F555)
 I (..\HARDWARE\sys.h)(0x5B2E424E)
 I (..\HARDWARE\mpu6050_42mm\inv_mpu.h)(0x5CB0C16C)
@@ -1601,8 +1602,8 @@ I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x53DBAFAE)
 I (..\HARDWARE\sys.h)(0x5B2E424E)
-F (..\HARDWARE\can1.c)(0x644522FA)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\can1.o --omf_browse .\objects\can1.crf --depend .\objects\can1.d)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+F (..\HARDWARE\can1.c)(0x650D0453)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\can1.o --omf_browse .\objects\can1.crf --depend .\objects\can1.d)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\USER\stm32f4xx.h)(0x5B2F8926)
 I (..\STM32\CORE\core_cm4.h)(0x527B7158)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E3CC2)
@@ -1660,6 +1661,7 @@ I (..\HARDWARE\mpu6050_42mm\myiic.h)(0x5CB0C16C)
 I (..\HARDWARE\mpu6050_42mm\sys.h)(0x53B52F60)
 I (..\HARDWARE\mpu6050_42mm\mpu6050.h)(0x5CB0C1F2)
 I (..\HARDWARE\delay.h)(0x5447C0B8)
+I (..\HARDWARE\uart3.h)(0x650D1112)
 F (..\HARDWARE\pwm.c)(0x6177B85D)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\pwm.o --omf_browse .\objects\pwm.crf --depend .\objects\pwm.d)
 I (..\HARDWARE\pwm.h)(0x5DCFB172)
 I (..\USER\stm32f4xx.h)(0x5B2F8926)
@@ -1718,7 +1720,7 @@ I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x53DBAFAE)
 I (..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x53DBAFAE)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\TASK\task.h)(0x6174F555)
 I (..\HARDWARE\sys.h)(0x5B2E424E)
 I (..\UCOS-III\uCOS_CONFIG\includes.h)(0x544E4300)
@@ -1750,8 +1752,8 @@ I (..\HARDWARE\mpu6050_42mm\myiic.h)(0x5CB0C16C)
 I (..\HARDWARE\mpu6050_42mm\sys.h)(0x53B52F60)
 I (..\HARDWARE\mpu6050_42mm\mpu6050.h)(0x5CB0C1F2)
 I (..\HARDWARE\delay.h)(0x5447C0B8)
-F (..\HARDWARE\uart3.c)(0x6507F158)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\uart3.o --omf_browse .\objects\uart3.crf --depend .\objects\uart3.d)
-I (..\HARDWARE\can1.h)(0x640AF7B3)
+F (..\HARDWARE\uart3.c)(0x650D10C1)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\UCOS-III\uC-CPU -I ..\UCOS-III\uC-LIB -I ..\UCOS-III\uCOS-III -I ..\UCOS-III\UCOS_BSP -I ..\UCOS-III\uCOS_CONFIG -I ..\UCOS-III\uCOS-III\Source -I ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\RealView -I ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView -I ..\HARDWARE -I ..\STM32\CORE -I ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc -I ..\TASK -I ..\DSP-LIB -I ..\DSP-LIB\inc -I ..\HARDWARE\mpu6050_42mm-IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -DSTM32F427xx -DSTM32F427_437xx -DUSE_STDPERIPH_DRIVER -D__FPU_USED="1" -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o .\objects\uart3.o --omf_browse .\objects\uart3.crf --depend .\objects\uart3.d)
+I (..\HARDWARE\can1.h)(0x650BADE6)
 I (..\USER\stm32f4xx.h)(0x5B2F8926)
 I (..\STM32\CORE\core_cm4.h)(0x527B7158)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E3CC2)
@@ -1810,7 +1812,7 @@ I (..\HARDWARE\mpu6050_42mm\sys.h)(0x53B52F60)
 I (..\HARDWARE\mpu6050_42mm\mpu6050.h)(0x5CB0C1F2)
 I (..\HARDWARE\delay.h)(0x5447C0B8)
 I (..\HARDWARE\uart1.h)(0x5D2C9280)
-I (..\HARDWARE\uart3.h)(0x5C44C756)
+I (..\HARDWARE\uart3.h)(0x650D1112)
 I (..\HARDWARE\uart6.h)(0x5FF44DD2)
 I (..\HARDWARE\pwm.h)(0x5DCFB172)
 I (..\HARDWARE\imu.h)(0x5C9EDAFE)

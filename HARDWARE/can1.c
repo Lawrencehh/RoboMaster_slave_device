@@ -2,7 +2,7 @@
 #include "task.h"
 #include "delay.h"
 //#include "uart1.h"
-//#include "uart3.h"
+#include "uart3.h"
 //#include "pwm.h"
 //#include "imu.h"
 //#include "gpio.h"
@@ -16,10 +16,15 @@
 #include "includes.h"					//ucos 使用	  
 #endif
 
+// 这些全局变量用于在整个代码中存储和传递信息。
 int flag;
 int16_t receive[4];
 int16_t adc_U;
+double currentPosition=0;
+double currentSpeed=0;
+double current=0;
 
+// 这个函数用于初始化CAN1接口。它设置了GPIO、NVIC（中断控制器）、CAN过滤器等。
 void CAN1_Init(void)
 {
     CAN_InitTypeDef        can;
@@ -119,16 +124,18 @@ void CAN1_RX0_IRQHandler(void)
 			
 				switch (rx_message.StdId)
         {
-					case 0x141:   
+					case 0x03:   //id
 					{
-						if(rx_message.Data[0]==0xA2){
-						Chasis_201_t.phrase= (rx_message.Data[6]<<8)|rx_message.Data[7];
+           currentPosition= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+					}break;	
+					case 0x201:   //手部电机
+					{
+						Chasis_201_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
 						Chasis_201_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
 						Chasis_201_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
 						Chasis_201_t.temper = rx_message.Data[6];
-						}
 					}break;
-					case 0x31:   
+					case 0x202:   
 					{
 						Chasis_202_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
 						Chasis_202_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
@@ -148,21 +155,7 @@ void CAN1_RX0_IRQHandler(void)
 						Chasis_204_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
 						Chasis_204_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
 						Chasis_204_t.temper = rx_message.Data[6];
-					}break;
-          case 0x205:   
-					{
-						Gimbal_205_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
-//						phase_6020[0]=phase_6020[1];
-//						phase_6020[1]=Gimbal_205_t.phrase;
-//						if(phase_6020[1]-phase_6020[0]>7000)round_6020_yaw--;
-//						if(phase_6020[1]-phase_6020[0]<-7000)round_6020_yaw++;
-//						phase_6020_yaw=(round_6020_yaw*8192+phase_6020[1])*0.044f;
-						Gimbal_205_t.real_elecrent = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Gimbal_205_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						this_angle_Yaw =Gimbal_205_t.phrase * 0.044f;
-//						if(this_angle_Yaw>=230){this_angle_Yaw=this_angle_Yaw-360.0f;}
-//		        else{this_angle_Yaw=this_angle_Yaw;}
-					}break;					
+					}break;				
 					case 0x206:					
 					{
 						Gimbal_206_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
@@ -209,86 +202,180 @@ void CAN1_RX0_IRQHandler(void)
 		OSIntExit();
 }
 
-void Chasis_ESC_Send(int16_t current_201,uint16_t ctlValue)
-{
-    CanTxMsg tx_message;
-  
-    tx_message.StdId = 0x141;
-    tx_message.IDE = CAN_Id_Standard;
-    tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = 0x08;
-    
-   // tx_message.Data[0] = (u8)(current_201 >> 8);
-	  tx_message.Data[0] = (u8) current_201;
-		tx_message.Data[1] =(u8) 0x00;
-    tx_message.Data[2] = (u8)0x00;
-    tx_message.Data[3] = (u8) 0x00;
-		tx_message.Data[4] = *((uint8_t *)&ctlValue + 0);
-    tx_message.Data[5] = *((uint8_t *)&ctlValue + 1);
-    tx_message.Data[6] = (u8) 0x00;
-    tx_message.Data[7] = (u8) 0x00;
-    
-    CAN_Transmit(CAN1,&tx_message);
-}
 
-void Gimbal_ESC_Send(int16_t current_205,int16_t current_206,int16_t current_208)
+// 这个函数用于发送底盘电机的电流值。
+void Chasis_ESC_Send(int16_t current_201,int16_t current_202,int16_t current_203,int16_t current_204)
 {
     CanTxMsg tx_message;
   
-    tx_message.StdId = 0x1FF;
+    tx_message.StdId = 0x200;
     tx_message.IDE = CAN_Id_Standard;
     tx_message.RTR = CAN_RTR_Data;
     tx_message.DLC = 0x08;
     
-    tx_message.Data[0] = (u8)(current_205 >> 8);
-    tx_message.Data[1] = (u8)current_205;
-    tx_message.Data[2] = (u8)(current_206 >> 8);
-    tx_message.Data[3] = (u8)current_206;
-	  tx_message.Data[6] = (u8)(current_208 >> 8);
-    tx_message.Data[7] = (u8)current_208;
+    tx_message.Data[0] = (u8)(current_201 >> 8);
+    tx_message.Data[1] = (u8)current_201;
+    tx_message.Data[2] = (u8)(current_202 >> 8);
+    tx_message.Data[3] = (u8)current_202;
+		tx_message.Data[4] = (u8)(current_203 >> 8);
+    tx_message.Data[5] = (u8)current_203;
+    tx_message.Data[6] = (u8)(current_204 >> 8);
+    tx_message.Data[7] = (u8)current_204;
     
     CAN_Transmit(CAN1,&tx_message);
 }
 
 
 
-void Gimbal_ESC_Send_minpitch(int16_t current_205,int16_t current_206,int16_t current_207,int16_t current_208)
+// 这个函数用于发送底盘电机的速度目标值。
+void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)//报文发送
+	
 {
     CanTxMsg tx_message;
   
-    tx_message.StdId = 0x2ff;
+    tx_message.StdId = STdId;
     tx_message.IDE = CAN_Id_Standard;
     tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = 0x08;
+    tx_message.DLC = dlc;
     
-    tx_message.Data[0] = (u8)(current_205 >> 8);
-    tx_message.Data[1] = (u8)current_205;
-    tx_message.Data[2] = (u8)(current_206 >> 8);
-    tx_message.Data[3] = (u8)current_206;
-    tx_message.Data[4] = (u8)(current_207 >> 8);
-    tx_message.Data[5] = (u8)current_207;
-    tx_message.Data[6] = (u8)(current_208 >> 8);
-    tx_message.Data[7] = (u8)current_208;
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 设置电机目标电流值
+void setMotorTargetCurrent(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
+	
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
     
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 设置电机目标加速加速度
+void setMotorTargetAcspeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)	
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 设置电机目标减速加速度
+void setMotorTargetDespeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)	
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 看似没有什么卵用，我先注释掉
+//void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4)
+//{
+//    CanTxMsg tx_message; 
+//    tx_message.StdId = 0x101;
+//    tx_message.IDE = CAN_Id_Standard;
+//    tx_message.RTR = CAN_RTR_Data;
+//    tx_message.DLC = 0x08;   
+//    tx_message.Data[0] = (u8)(current_1 >> 8);
+//    tx_message.Data[1] = (u8)current_1;
+//    tx_message.Data[2] = (u8)(current_2 >> 8); 
+//    tx_message.Data[3] = (u8)current_2;
+//	  tx_message.Data[4] = (u8)(current_3 >> 8);
+//    tx_message.Data[5] = (u8)current_3;
+//    tx_message.Data[6] = (u8)(current_4 >> 8); 
+//    tx_message.Data[7] = (u8)current_4;
+//    CAN_Transmit(CAN1,&tx_message);
+//}
+
+// 设置电机使能
+void motorEnable(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
     CAN_Transmit(CAN1,&tx_message);
 }
 
 
-void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4)
+// 设置电机目标位置
+void setMotorTargetPosition(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
 {
-    CanTxMsg tx_message; 
-    tx_message.StdId = 0x101;
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
     tx_message.IDE = CAN_Id_Standard;
     tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = 0x08;   
-    tx_message.Data[0] = (u8)(current_1 >> 8);
-    tx_message.Data[1] = (u8)current_1;
-    tx_message.Data[2] = (u8)(current_2 >> 8); 
-    tx_message.Data[3] = (u8)current_2;
-	  tx_message.Data[4] = (u8)(current_3 >> 8);
-    tx_message.Data[5] = (u8)current_3;
-    tx_message.Data[6] = (u8)(current_4 >> 8); 
-    tx_message.Data[7] = (u8)current_4;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 读取电机电流
+void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1)
+{
+
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
     CAN_Transmit(CAN1,&tx_message);
 }
 
