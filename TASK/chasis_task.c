@@ -74,7 +74,7 @@ void Chasis_task(void *p_arg)
 				bytes[2] = (snake_motor_position[i] >> 8) & 0xFF;   // 次低有效字节
 				bytes[3] = snake_motor_position[i] & 0xFF;          // 最低有效字节 (LSB)
 				setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
-				delay_us(100);
+				delay_us(200);
 				// reading the encorder
 				readEncorder(can_id,0x02,0x03,0x07);
 			}
