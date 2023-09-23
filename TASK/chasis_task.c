@@ -79,6 +79,10 @@ void Chasis_task(void *p_arg)
 				readEncorder(can_id,0x02,0x03,0x07);
 			}
 			
+			
+/************************************************************* 
+			send snake motors position to the master device
+***************************************************************/
 			  uint8_t packet[68] = {0}; 
 				
 				// header: 0xAA55
