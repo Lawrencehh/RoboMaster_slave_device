@@ -9,53 +9,75 @@
 #include "gpio.h"
 #include "includes.h"
 #include "math.h"
+#include <stdint.h>  // 包含int16_t的头文件
 
-float velo_206_output= 0.0f;       //pitch轴速度环函数输出值
+int32_t GM6020_setpoint = 20000;  // 设定点
+int32_t GM6020_output_limit = 30000; // 对输出电压作出限制
 
-int16_t output_205=0,output_206=0;
-int16_t AHRS_Yaw_angle=0; 
-int16_t flag_100D2=0,count_2006=0;   //2006计数
+int32_t GM6020_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
+int32_t GM6020_absolute_position = 0;  // 绝对位置
+int32_t error = 0; // 误差值
+int32_t GM6020_position_difference = 0; // 计算位置差
 
-float target_angle_Pitch1=300.0f,target_angle_yaw1=180.0f;  //大枪管yaw pitch 角度
-float last_bodan_anger;
-float Eular[3],yaw_9050,pitch_9050;
-int16_t round_count=0;
-float Yaw_9050[2];
-float target_anger_bodan_204;
-int count_3508=0;
+// PID参数
+double GM6020_Kp = 10;  // 比例常数
+double GM6020_Ki = 0.001;  // 积分常数
+double GM6020_Kd = 0.001; // 微分常数
+int32_t GM6020_output = 0;    // 输出电压 -30000 - 30000 防止溢出
+int32_t prev_error = 0; // 上一次的误差
+int32_t integral = 0;   // 误差积分
+int32_t derivative; 	// 误差微分			
 
-static uint16_t ctlValue = 10 * 100;
+// 更新GM6020_PID控制器
+void GM6020_update_pid() {
+	
+		// 计算位置差
+		GM6020_position_difference = GM6020_current_raw_position - GM6020_last_raw_position;
+		// 检查是否有位置包裹
+		if (abs(GM6020_position_difference) > 4096) {  // 8191 / 2 = 4095.5
+				if (GM6020_position_difference > 0) {
+						--GM6020_rotation_count;
+				} else {
+						++GM6020_rotation_count;
+				}
+		}
+		// 计算绝对位置
+		GM6020_absolute_position = GM6020_current_raw_position + GM6020_rotation_count * 8192;
 
-float this_angle_Pitch,target_angle_Pitch=190.0f,this_angle_Yaw;
-
-
-
-int16_t target_velo_201=0;
-int16_t output_201=0;
-int16_t output_204=0;
-
-int gun_count=0,i_6=100,i_8=100,i_13=150,i_14=100,i_16=100,i_100=0;
-enum mode
-{ 
-	auto_mode,
-	follow_mode,
-	uniaxial_mode,
-	buff_mode,
-	buff_spin_mode
-}gimbal_mode=follow_mode;
-
+		
+    error = GM6020_setpoint - GM6020_absolute_position;  // 计算误差
+    integral += error;                // 计算误差积分
+    derivative = error - prev_error;  // 计算误差微分
+    // 计算输出电压
+		GM6020_output = GM6020_Kp * error + GM6020_Ki * integral + GM6020_Kd * derivative; // PID：当系统有持续的偏差（steady-state error）时，使用PID。
+	
+		// 限制GM6020_output在-GM6020_output_limit到GM6020_output_limit之间
+    if (GM6020_output > GM6020_output_limit) {
+        GM6020_output = GM6020_output_limit;
+    } else if (GM6020_output < -GM6020_output_limit) {
+        GM6020_output = -GM6020_output_limit;
+    }
+		
+		// 发送控制指令
+		Can_Send_Msg(GM6020_output,0,0,0);
+    prev_error = error;  // 更新上一次的误差
+		// 更新上一次的原始位置
+		GM6020_last_raw_position = GM6020_current_raw_position;
+		// 更新当前位置
+		GM6020_current_raw_position = GripperMotor_205_t.position; 
+}
 
 void Gimbal_task(void *p_arg)
 {
 	OS_ERR err;
-	p_arg = p_arg;
-	
-	while(1)
-	{  
-		
-//		TX2_Transmit_Start();
 
-          OSTimeDly(10,OS_OPT_TIME_PERIODIC,&err); //延时10ms
+
+	while(1)
+	{  	
+
+		
+			GM6020_update_pid();  // 更新GM6020_PID控制器
+			OSTimeDly(10,OS_OPT_TIME_PERIODIC,&err); //延时10ms
   } 
 }
 

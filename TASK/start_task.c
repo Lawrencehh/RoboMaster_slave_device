@@ -228,6 +228,11 @@ void Init_task(void *p_arg){
 	  TIM8_PWM_Init();
 //		//Heat_PWM_Init();
 	  USART6_init();     // 串口6初始化
+		
+		
+		// 初始化GM6020 pid控制的所用的当前位置参数
+		GM6020_last_raw_position = GripperMotor_205_t.position;  // 上一次的原始位置（0-8191）
+		GM6020_current_raw_position = GripperMotor_205_t.position;  // 当前的原始位置（0-8191）
   	
 	
 

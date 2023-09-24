@@ -20,9 +20,13 @@
 int flag;
 int16_t receive[4];
 int16_t adc_U;
-int32_t currentPosition[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 double currentSpeed=0;
 double current=0;
+
+// ¼ÆËãGM6020¾ø¶ÔÎ»ÖÃµÄ²ÎÊı
+int16_t GM6020_last_raw_position;  // ÉÏÒ»´ÎµÄÔ­Ê¼Î»ÖÃ£¨0-8191£©
+int16_t GM6020_current_raw_position;  // µ±Ç°µÄÔ­Ê¼Î»ÖÃ£¨0-8191£©
 
 // Õâ¸öº¯ÊıÓÃÓÚ³õÊ¼»¯CAN1½Ó¿Ú¡£ËüÉèÖÃÁËGPIO¡¢NVIC£¨ÖĞ¶Ï¿ØÖÆÆ÷£©¡¢CAN¹ıÂËÆ÷µÈ¡£
 void CAN1_Init(void)
@@ -102,9 +106,8 @@ void CAN1_TX_IRQHandler(void)
     }
 		OSIntExit(); 
 }
-	    
-Chasis_ID_t Chasis_201_t,Chasis_202_t,Chasis_203_t,Chasis_204_t,Bodan_208_t;
-Gimbal_ID_t Gimbal_205_t,Gimbal_206_t,Gimbal_207_t,Gimbal_208_t;
+	 
+GripperMotor_ID_t GripperMotor_205_t; // ÊÖ²¿µÄGM6020µç»ú
 int32_t phase_2006,phase_2006_bodan[2],phase_mid_2006,round_bodan_2006=0;
 int32_t phase_6020[2],round_6020_yaw=0;
 float anger_bodan_2006,phase_6020_yaw;
@@ -127,143 +130,85 @@ void CAN1_RX0_IRQHandler(void)
 					case 0x01:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x02:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x03:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x04:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x05:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x06:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x07:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x08:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x09:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x0A:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x0B:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					case 0x0C:   //id
 					{
 						if(rx_message.Data[0]==0x04){
-							currentPosition[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+							currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
 						}
 					}break;	
 					
-					case 0x201:   //ÊÖ²¿µç»ú
+					//ÊÖ²¿µç»ú
+					case 0x00000205:				// GM6020 »Ø´«Êı¾İ£¬ID=1	
 					{
-						Chasis_201_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
-						Chasis_201_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Chasis_201_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						Chasis_201_t.temper = rx_message.Data[6];
+						GripperMotor_205_t.position = (rx_message.Data[0]<<8)|rx_message.Data[1];
+						GripperMotor_205_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
+						GripperMotor_205_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
+						GripperMotor_205_t.temperature = rx_message.Data[6];
 					}break;
-					case 0x202:   
-					{
-						Chasis_202_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
-						Chasis_202_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Chasis_202_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						Chasis_202_t.temper = rx_message.Data[6];
-					}break;
-					case 0x203:   
-					{
-						Chasis_203_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
-						Chasis_203_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Chasis_203_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						Chasis_203_t.temper = rx_message.Data[6];
-					}break;
-					case 0x204:   
-					{
-						Chasis_204_t.phrase = ((rx_message.Data[0]<<8)|rx_message.Data[1])*0.044f;
-						Chasis_204_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Chasis_204_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						Chasis_204_t.temper = rx_message.Data[6];
-					}break;				
-					case 0x206:					
-					{
-						Gimbal_206_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
-						Gimbal_206_t.real_elecrent = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Gimbal_206_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						this_angle_Pitch =Gimbal_206_t.phrase * 0.044f;
-					}break;
-					case 0x208:
-					{
-						Bodan_208_t.phrase = (rx_message.Data[0]<<8)|rx_message.Data[1];
-						phase_2006_bodan[0]=phase_2006_bodan[1];
-						phase_2006_bodan[1]=Bodan_208_t.phrase*360/8192;
-           if((phase_2006_bodan[1]-phase_2006_bodan[0])>300)round_bodan_2006++;
-           if((phase_2006_bodan[1]-phase_2006_bodan[0])<-300)round_bodan_2006--;	
-           phase_mid_2006=round_bodan_2006*360 + phase_2006_bodan[1];
-           anger_bodan_2006=phase_mid_2006/36;	
-					if(target_anger_bodan_208>30000 || target_anger_bodan_208<-30000)
-						{
-							target_anger_bodan_208=0;
-							phase_mid_2006=0;
-							phase_2006_bodan[0]=0;
-							phase_2006_bodan[1]=0;
-							anger_bodan_2006=0;
-							round_bodan_2006=0;
-						}
-						Bodan_208_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						Bodan_208_t.elecrent = (rx_message.Data[4]<<8)|rx_message.Data[5];
-					}break;
-					
-					case 0x102:
-					{
-			      receive[0]=(rx_message.Data[0]<<8)|rx_message.Data[1];
-						Adc_Volt=receive[0];
-		       	receive[1]=(rx_message.Data[2]<<8)|rx_message.Data[3];
-						cap_error=receive[1];
-		       	receive[2]=(rx_message.Data[4]<<8)|rx_message.Data[5];
-		       	receive[3]=(rx_message.Data[6]<<8)|rx_message.Data[7];
-		      	 adc_U=receive[1];
-					}break;
+
 					default:
 						break;
 				}
@@ -296,6 +241,96 @@ void Chasis_ESC_Send(int16_t current_201,int16_t current_202,int16_t current_203
 
 
 
+
+// ·¢ËÍ¶ÁÈ¡ÉşÇıµç»ú±àÂëÆ÷Ö¸Áî
+void readSnakeEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1)	
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 6020¹Ø½Úµç»ú
+void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4) // 6020¹Ø½Úµç»ú
+{
+    CanTxMsg tx_message; 
+    tx_message.StdId = 0x1FF;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = 0x08;   
+    tx_message.Data[0] = (u8)(current_1 >> 8);
+    tx_message.Data[1] = (u8)current_1;
+    tx_message.Data[2] = (u8)(current_2 >> 8); 
+    tx_message.Data[3] = (u8)current_2;
+	  tx_message.Data[4] = (u8)(current_3 >> 8);
+    tx_message.Data[5] = (u8)current_3;
+    tx_message.Data[6] = (u8)(current_4 >> 8); 
+    tx_message.Data[7] = (u8)current_4;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// ÉèÖÃµç»úÊ¹ÄÜ
+void motorEnable(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+
+// ÉèÖÃµç»úÄ¿±êÎ»ÖÃ
+void setMotorTargetPosition(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// ¶ÁÈ¡µç»úµçÁ÷
+void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1)
+{
+
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
 // Õâ¸öº¯ÊıÓÃÓÚ·¢ËÍµ×ÅÌµç»úµÄËÙ¶ÈÄ¿±êÖµ¡£
 void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)//±¨ÎÄ·¢ËÍ	
 {
@@ -314,6 +349,8 @@ void setMotorTargetSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)//±
     tx_message.Data[5] = D5;
     CAN_Transmit(CAN1,&tx_message);
 }
+
+
 
 // ÉèÖÃµç»úÄ¿±êµçÁ÷Öµ
 void setMotorTargetCurrent(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
@@ -371,93 +408,3 @@ void setMotorTargetDespeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
     tx_message.Data[5] = D5;
     CAN_Transmit(CAN1,&tx_message);
 }
-// ÉèÖÃµç»úÄ¿±ê¼õËÙ¼ÓËÙ¶È
-void readEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1)	
-{
-    CanTxMsg tx_message;
-  
-    tx_message.StdId = STdId;
-    tx_message.IDE = CAN_Id_Standard;
-    tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = dlc;
-    
-    tx_message.Data[0] = D0;
-    tx_message.Data[1] = D1;
-    CAN_Transmit(CAN1,&tx_message);
-}
-
-// ¿´ËÆÃ»ÓĞÊ²Ã´ÂÑÓÃ£¬ÎÒÏÈ×¢ÊÍµô
-//void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4)
-//{
-//    CanTxMsg tx_message; 
-//    tx_message.StdId = 0x101;
-//    tx_message.IDE = CAN_Id_Standard;
-//    tx_message.RTR = CAN_RTR_Data;
-//    tx_message.DLC = 0x08;   
-//    tx_message.Data[0] = (u8)(current_1 >> 8);
-//    tx_message.Data[1] = (u8)current_1;
-//    tx_message.Data[2] = (u8)(current_2 >> 8); 
-//    tx_message.Data[3] = (u8)current_2;
-//	  tx_message.Data[4] = (u8)(current_3 >> 8);
-//    tx_message.Data[5] = (u8)current_3;
-//    tx_message.Data[6] = (u8)(current_4 >> 8); 
-//    tx_message.Data[7] = (u8)current_4;
-//    CAN_Transmit(CAN1,&tx_message);
-//}
-
-// ÉèÖÃµç»úÊ¹ÄÜ
-void motorEnable(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
-{
-    CanTxMsg tx_message;
-  
-    tx_message.StdId = STdId;
-    tx_message.IDE = CAN_Id_Standard;
-    tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = dlc;
-    
-    tx_message.Data[0] = D0;
-    tx_message.Data[1] = D1;
-	  tx_message.Data[2] = D2;
-    tx_message.Data[3] = D3;
-	  tx_message.Data[4] = D4;
-    tx_message.Data[5] = D5;
-    CAN_Transmit(CAN1,&tx_message);
-}
-
-
-// ÉèÖÃµç»úÄ¿±êÎ»ÖÃ
-void setMotorTargetPosition(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
-{
-    CanTxMsg tx_message;
-  
-    tx_message.StdId = STdId;
-    tx_message.IDE = CAN_Id_Standard;
-    tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = dlc;
-    
-    tx_message.Data[0] = D0;
-    tx_message.Data[1] = D1;
-	  tx_message.Data[2] = D2;
-    tx_message.Data[3] = D3;
-	  tx_message.Data[4] = D4;
-    tx_message.Data[5] = D5;
-    CAN_Transmit(CAN1,&tx_message);
-}
-
-// ¶ÁÈ¡µç»úµçÁ÷
-void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1)
-{
-
-    CanTxMsg tx_message;
-  
-    tx_message.StdId = STdId;
-    tx_message.IDE = CAN_Id_Standard;
-    tx_message.RTR = CAN_RTR_Data;
-    tx_message.DLC = dlc;
-    
-    tx_message.Data[0] = D0;
-    tx_message.Data[1] = D1;
-    CAN_Transmit(CAN1,&tx_message);
-}
-
-
