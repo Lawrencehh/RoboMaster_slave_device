@@ -21,12 +21,14 @@ int flag;
 int16_t receive[4];
 int16_t adc_U;
 int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
-double currentSpeed=0;
-double current=0;
+
 
 // 计算GM6020绝对位置的参数
 int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-8191）
 int16_t GM6020_current_raw_position;  // 当前的原始位置（0-8191）
+// 计算C610绝对位置的参数
+int16_t C610_last_raw_position;  // 上一次的原始位置（0-8191）
+int16_t C610_current_raw_position;  // 当前的原始位置（0-8191）
 
 // 这个函数用于初始化CAN1接口。它设置了GPIO、NVIC（中断控制器）、CAN过滤器等。
 void CAN1_Init(void)
@@ -108,6 +110,7 @@ void CAN1_TX_IRQHandler(void)
 }
 	 
 GripperMotor_ID_t GripperMotor_205_t; // 手部的GM6020电机
+GripperMotor_ID_t GripperMotor_201_t; // 手部的C610电机
 int32_t phase_2006,phase_2006_bodan[2],phase_mid_2006,round_bodan_2006=0;
 int32_t phase_6020[2],round_6020_yaw=0;
 float anger_bodan_2006,phase_6020_yaw;
@@ -208,6 +211,14 @@ void CAN1_RX0_IRQHandler(void)
 						GripperMotor_205_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
 						GripperMotor_205_t.temperature = rx_message.Data[6];
 					}break;
+					
+					case 0x00000201:				// C610 回传数据，ID=1	
+					{
+						GripperMotor_201_t.position = (rx_message.Data[0]<<8)|rx_message.Data[1];
+						GripperMotor_201_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
+						GripperMotor_201_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
+						GripperMotor_201_t.temperature = rx_message.Data[6];
+					}break;
 
 					default:
 						break;
@@ -257,11 +268,30 @@ void readSnakeEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1)
     CAN_Transmit(CAN1,&tx_message);
 }
 
-// 6020关节电机
-void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4) // 6020关节电机
+// GM6020关节电机
+void GM6020_Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4)
 {
     CanTxMsg tx_message; 
     tx_message.StdId = 0x1FF;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = 0x08;   
+    tx_message.Data[0] = (u8)(current_1 >> 8);
+    tx_message.Data[1] = (u8)current_1;
+    tx_message.Data[2] = (u8)(current_2 >> 8); 
+    tx_message.Data[3] = (u8)current_2;
+	  tx_message.Data[4] = (u8)(current_3 >> 8);
+    tx_message.Data[5] = (u8)current_3;
+    tx_message.Data[6] = (u8)(current_4 >> 8); 
+    tx_message.Data[7] = (u8)current_4;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// C610电机
+void C610_Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4)
+{
+    CanTxMsg tx_message; 
+    tx_message.StdId = 0x200;
     tx_message.IDE = CAN_Id_Standard;
     tx_message.RTR = CAN_RTR_Data;
     tx_message.DLC = 0x08;   

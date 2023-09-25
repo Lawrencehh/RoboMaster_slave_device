@@ -19,7 +19,8 @@ void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1);
 
 void readSnakeEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1); //读取绳驱电机的编码器值
 
-void Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4); // 6020关节电机控制
+void GM6020_Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4); // GM6020关节电机控制
+void C610_Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4); // C610关节电机控制
 
 
 typedef struct
@@ -32,6 +33,7 @@ typedef struct
 
 
 extern GripperMotor_ID_t GripperMotor_205_t; // 手部的GM6020电机
+extern GripperMotor_ID_t GripperMotor_201_t; // 手部的C610电机
 extern int ENABLE_yes;
 extern int flag;
 extern int16_t receive[4];
@@ -39,10 +41,12 @@ extern int16_t adc_U,cap_error;
 extern int32_t round_6020_yaw;
 extern float phase_6020_yaw;
 extern int32_t currentPosition_snake[12];
-extern double currentSpeed;
-extern double current;
+
 
 extern int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-8191）
 extern int16_t GM6020_current_raw_position;  // 当前的原始位置（0-8191）
+
+extern int16_t C610_last_raw_position;  // 上一次的原始位置（0-8191）
+extern int16_t C610_current_raw_position;  // 当前的原始位置（0-8191）
 
 #endif

@@ -4,11 +4,7 @@
 #include "stm32f4xx.h"
 #include "sys.h"
 #include "includes.h"
-//#include "mpu6050_interrupt.h"
-#include "inv_mpu.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include "myiic.h"
-#include "mpu6050.h"
+
 
 
 void StartTaskCreate(void);

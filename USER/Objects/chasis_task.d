@@ -56,11 +56,6 @@
 .\objects\chasis_task.o: ..\UCOS-III\uC-LIB\lib_math.h
 .\objects\chasis_task.o: ..\UCOS-III\uCOS_CONFIG\app_cfg.h
 .\objects\chasis_task.o: ..\UCOS-III\UCOS_BSP\bsp.h
-.\objects\chasis_task.o: ..\HARDWARE\mpu6050_42mm\inv_mpu.h
-.\objects\chasis_task.o: ..\HARDWARE\mpu6050_42mm\inv_mpu_dmp_motion_driver.h
-.\objects\chasis_task.o: ..\HARDWARE\mpu6050_42mm\myiic.h
-.\objects\chasis_task.o: ..\HARDWARE\mpu6050_42mm\sys.h
-.\objects\chasis_task.o: ..\HARDWARE\mpu6050_42mm\mpu6050.h
 .\objects\chasis_task.o: ..\HARDWARE\delay.h
 .\objects\chasis_task.o: ..\HARDWARE\Judge_System.h
 .\objects\chasis_task.o: ..\HARDWARE\gpio.h

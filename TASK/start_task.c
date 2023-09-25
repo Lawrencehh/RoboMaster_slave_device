@@ -4,13 +4,13 @@
 #include "delay.h"
 #include "uart1.h"
 #include "uart3.h"
-#include "usart69050.h"	
 #include "pwm.h"
 #include "imu.h"
 #include "gpio.h"
 #include "Judge_System.h"
 #include "pstwo.h"
 #include "includes.h"
+#include "uart6.h"
  
 //任务优先级
 #define START_TASK_PRIO		3
@@ -222,23 +222,28 @@ void Init_task(void *p_arg){
 
 		TX2_USART3_Init();       //TX2通信
 		
+		USART6_Init(); //初始化串口6
+
+		
 	  TIM2_PWM_Init();
 	  TIM4_PWM_Init();
 	  TIM5_PWM_Init();
 	  TIM8_PWM_Init();
 //		//Heat_PWM_Init();
-	  USART6_init();     // 串口6初始化
 		
 		
 		// 初始化GM6020 pid控制的所用的当前位置参数
 		GM6020_last_raw_position = GripperMotor_205_t.position;  // 上一次的原始位置（0-8191）
 		GM6020_current_raw_position = GripperMotor_205_t.position;  // 当前的原始位置（0-8191）
+		// 初始化C610 pid控制的所用的当前位置参数
+		C610_last_raw_position = GripperMotor_205_t.position;  // 上一次的原始位置（0-8191）
+		C610_current_raw_position = GripperMotor_201_t.position;  // 当前的原始位置（0-8191）
   	
 	
 
 		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
 	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
-//		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
+		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);
 // 
 	OS_TaskSuspend((OS_TCB*)&InitTaskTCB,&err);		   //		

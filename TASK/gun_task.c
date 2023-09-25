@@ -3,50 +3,64 @@
 #include "task.h"
 #include "delay.h"
 #include "uart1.h"
-//#include "uart3.h"
+#include "uart3.h"
 #include "uart6.h"
 #include "pwm.h"
 #include "imu.h"
 #include "gpio.h"
 #include "includes.h"
 #include "Judge_System.h"
-u8 continue_flag=1;
-int16_t target_V201_friction,target_V202_friction,target_V208_bodan,target_anger_bodan_208=0.0f;
-int16_t output_201_firction=0,output_202_firction=0,output_208_bodan=0;
-int16_t flag_bodan=0,flag_bodan_finish=1,flag_count=0,count_block=0,count_turn=0;
-int16_t flag1=0,flag2=0;
-int16_t count_bullet=0,amount_42mm=0;
-int16_t error_bodan[2],error_bodan_min[2],count_error_bo=0,count_error=0,count_error_min=0;
-u8 speed_ready=1;
-int16_t count_j=0,count_jj[5],count_shift=0;
-u8 flag_friction_start=0,flag_bo_finish=0;
-int16_t error11,error22;
-int16_t last_fire_mode;
-u8 flag_V_shoot_mode_shift=0,count_shoot_mode_shift=1,flag_shoot_mode_shift=0;
-int16_t friction_start=200;
 
-enum mode
-{
-	low_speed_mode,
-	middle_speed_mode,
-	high_speed_mode
-}shoot_speed_mode=middle_speed_mode;
+#include "SCServo.h" // 飞特串口舵机
+#include "SMS_STS.h"
 
-enum Mode
+int continue_flag=0;
+int Pos;
+int Speed;
+int Load;
+int Voltage;
+int Temper;
+int Move;
+int Current;
+
+//舵机控制，简单写
+void STS3032_ServoControl(void)
 {
-	sigle_fire_mode,
-	triple_fire_mode,
-	burst_fire_mode
-}shoot_mode=sigle_fire_mode;
+	WritePosEx(1, 2000, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
+//	// 第一个参数是ID号，默认为1
+//	// 第二个参数是位置，一圈为4096
+//	// 第三个参数是最高速度 （pulse/s）
+//	// 第四个参数是加速度 （pulse/s^2）
+}
 
 void Gun_task(void *p_arg)
 {
 	OS_ERR err;
-	p_arg = p_arg;
-	
+//	STS3032_ServoControl(); //STS3032舵机测试
 	while(1)
 	{  
+//		STS3032_ServoControl(); //STS3032舵机测试
 
+		
+		if(FeedBack(1)!=-1){
+			Pos = ReadPos(-1);
+			Speed = ReadSpeed(-1);
+			Load = ReadLoad(-1);
+			Voltage = ReadVoltage(-1);
+			Temper = ReadTemper(-1);
+			Move = ReadMove(-1);
+			Current = ReadCurrent(-1);
+			//printf("Pos:%d\n", Pos);
+			//printf("Speed:%d\n", Speed);
+			//printf("Load:%d\n", Load);
+			//printf("Voltage:%d\n", Voltage);
+			//printf("Temper:%d\n", Temper);
+			//printf("Move:%d\n", Move);
+			//printf("Current:%d\n", Current);
+			delay_us(10);
+		}
+		Pos = ReadPos(1);
+		
 		OSTimeDly(10,OS_OPT_TIME_PERIODIC,&err); //延时10ms	
 	}
 } 

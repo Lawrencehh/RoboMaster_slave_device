@@ -54,9 +54,4 @@
 .\objects\uart1.o: ..\HARDWARE\can1.h
 .\objects\uart1.o: ..\TASK\task.h
 .\objects\uart1.o: ..\HARDWARE\sys.h
-.\objects\uart1.o: ..\HARDWARE\mpu6050_42mm\inv_mpu.h
-.\objects\uart1.o: ..\HARDWARE\mpu6050_42mm\inv_mpu_dmp_motion_driver.h
-.\objects\uart1.o: ..\HARDWARE\mpu6050_42mm\myiic.h
-.\objects\uart1.o: ..\HARDWARE\mpu6050_42mm\sys.h
-.\objects\uart1.o: ..\HARDWARE\mpu6050_42mm\mpu6050.h
 .\objects\uart1.o: ..\HARDWARE\Judge_System.h

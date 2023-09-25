@@ -53,8 +53,3 @@
 .\objects\main.o: ..\UCOS-III\uC-LIB\lib_math.h
 .\objects\main.o: ..\UCOS-III\uCOS_CONFIG\app_cfg.h
 .\objects\main.o: ..\UCOS-III\UCOS_BSP\bsp.h
-.\objects\main.o: ..\HARDWARE\mpu6050_42mm\inv_mpu.h
-.\objects\main.o: ..\HARDWARE\mpu6050_42mm\inv_mpu_dmp_motion_driver.h
-.\objects\main.o: ..\HARDWARE\mpu6050_42mm\myiic.h
-.\objects\main.o: ..\HARDWARE\mpu6050_42mm\sys.h
-.\objects\main.o: ..\HARDWARE\mpu6050_42mm\mpu6050.h

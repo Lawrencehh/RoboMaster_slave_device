@@ -704,14 +704,119 @@
               <FilePath>..\HARDWARE\packet.c</FilePath>
             </File>
             <File>
-              <FileName>usart69050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\usart69050.c</FilePath>
-            </File>
-            <File>
               <FileName>pstwo.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\pstwo.c</FilePath>
+            </File>
+            <File>
+              <FileName>SCS.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\SCS.C</FilePath>
+            </File>
+            <File>
+              <FileName>SMS_STS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\SMS_STS.c</FilePath>
+            </File>
+            <File>
+              <FileName>gimbal_min_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\gimbal_min_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>can1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\can1.h</FilePath>
+            </File>
+            <File>
+              <FileName>can2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\can2.h</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>imu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\imu.h</FilePath>
+            </File>
+            <File>
+              <FileName>imu_data_decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\imu_data_decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>INST.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\INST.h</FilePath>
+            </File>
+            <File>
+              <FileName>Judge_System.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\Judge_System.h</FilePath>
+            </File>
+            <File>
+              <FileName>packet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\packet.h</FilePath>
+            </File>
+            <File>
+              <FileName>pstwo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\pstwo.h</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\pwm.h</FilePath>
+            </File>
+            <File>
+              <FileName>SCS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\SCS.h</FilePath>
+            </File>
+            <File>
+              <FileName>SCServo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\SCServo.h</FilePath>
+            </File>
+            <File>
+              <FileName>SMS_STS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\SMS_STS.h</FilePath>
+            </File>
+            <File>
+              <FileName>sys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\sys.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\uart1.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\uart3.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\HARDWARE\uart6.h</FilePath>
+            </File>
+            <File>
+              <FileName>SCSerail.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\SCSerail.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -942,31 +1047,6 @@
               <FileName>arm_cortexM4lf_math.lib</FileName>
               <FileType>4</FileType>
               <FilePath>..\UCOS-III\arm_cortexM4lf_math.lib</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>MPU6050</GroupName>
-          <Files>
-            <File>
-              <FileName>inv_mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\mpu6050_42mm\inv_mpu.c</FilePath>
-            </File>
-            <File>
-              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\mpu6050_42mm\inv_mpu_dmp_motion_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>mpu6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\mpu6050_42mm\mpu6050.c</FilePath>
-            </File>
-            <File>
-              <FileName>myiic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\mpu6050_42mm\myiic.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,6 +1,5 @@
 
 #include "includes.h"
-#include "mpu6050.h"
 #include "can2.h"
 #include "task.h"
 #include "uart1.h"

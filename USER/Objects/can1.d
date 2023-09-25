@@ -53,10 +53,5 @@
 .\objects\can1.o: ..\UCOS-III\uC-LIB\lib_math.h
 .\objects\can1.o: ..\UCOS-III\uCOS_CONFIG\app_cfg.h
 .\objects\can1.o: ..\UCOS-III\UCOS_BSP\bsp.h
-.\objects\can1.o: ..\HARDWARE\mpu6050_42mm\inv_mpu.h
-.\objects\can1.o: ..\HARDWARE\mpu6050_42mm\inv_mpu_dmp_motion_driver.h
-.\objects\can1.o: ..\HARDWARE\mpu6050_42mm\myiic.h
-.\objects\can1.o: ..\HARDWARE\mpu6050_42mm\sys.h
-.\objects\can1.o: ..\HARDWARE\mpu6050_42mm\mpu6050.h
 .\objects\can1.o: ..\HARDWARE\delay.h
 .\objects\can1.o: ..\HARDWARE\uart3.h

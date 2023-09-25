@@ -2,15 +2,15 @@
 #define __UART6_H
 
 #include <stm32f4xx.h>
+#include <stdint.h>
 
-//void AHRS_USART6_Init(void);
+void Uart6_Flush(void);
+int16_t Uart6_Read(void);
+void USART6_Init(void);
 void USART6_IRQHandler(void);
-void AHRS_Transmit_Start(void);
-void AHRS_Transmit_Stop(void);
-void AHRS_Transmit_Stop_Magnetic_Steering(void);
-extern int16_t AHRS_Yaw_angle; 
-extern float Angle_Yaw;
-
+void USART6_Handler(void);
+void Uart6_Send(uint8_t *buf , uint8_t len);
+//void Servocontrol(void);
 #endif
 
 

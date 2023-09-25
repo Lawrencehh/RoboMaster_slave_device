@@ -53,11 +53,6 @@
 .\objects\uart3.o: ..\UCOS-III\uC-LIB\lib_math.h
 .\objects\uart3.o: ..\UCOS-III\uCOS_CONFIG\app_cfg.h
 .\objects\uart3.o: ..\UCOS-III\UCOS_BSP\bsp.h
-.\objects\uart3.o: ..\HARDWARE\mpu6050_42mm\inv_mpu.h
-.\objects\uart3.o: ..\HARDWARE\mpu6050_42mm\inv_mpu_dmp_motion_driver.h
-.\objects\uart3.o: ..\HARDWARE\mpu6050_42mm\myiic.h
-.\objects\uart3.o: ..\HARDWARE\mpu6050_42mm\sys.h
-.\objects\uart3.o: ..\HARDWARE\mpu6050_42mm\mpu6050.h
 .\objects\uart3.o: ..\HARDWARE\delay.h
 .\objects\uart3.o: ..\HARDWARE\uart1.h
 .\objects\uart3.o: ..\HARDWARE\uart3.h
