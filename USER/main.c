@@ -13,7 +13,6 @@
 	OS_CRITICAL_EXIT();	//退出临界区	 
 	OSStart(&err);  //开启UCOSIII
 
-	while(1);
+	while(1); 
 }
 
- 

@@ -173,11 +173,11 @@ void start_task(void *p_arg)
                  (OS_ERR 	* )&err);			
 #endif						
 								 
-//		OS_TaskSuspend((OS_TCB*)&CHASISTaskTCB,&err);       //挂起底盘任务								 
-		//OS_TaskSuspend((OS_TCB*)&GIMBALTaskTCB,&err);       //挂起云台任务
-//    OS_TaskSuspend((OS_TCB*)&GUNTaskTCB,&err);          //挂起射击任务
+		OS_TaskSuspend((OS_TCB*)&CHASISTaskTCB,&err);       //挂起底盘任务								 
+		OS_TaskSuspend((OS_TCB*)&GIMBALTaskTCB,&err);       //挂起云台任务
+    OS_TaskSuspend((OS_TCB*)&GUNTaskTCB,&err);          //挂起射击任务
 //	  OS_TaskSuspend((OS_TCB*)&TIMETaskTCB,&err);          //挂起时间任务
-//	OS_TaskSuspend((OS_TCB*)&StartTaskTCB,&err);		    //挂起开始任务			
+		OS_TaskSuspend((OS_TCB*)&StartTaskTCB,&err);		    //挂起开始任务			
 								 
 	OS_CRITICAL_EXIT();	//推出临界区   
 }
@@ -205,8 +205,9 @@ void Init_task(void *p_arg){
 	 
 		NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//中断分组配置
   	User_GPIO_Init();
-		CAN1_Init();                //CAN总线配置
+		
 	
+		// snake_motors使能和参数何止
 		for(uint8_t i=0;i<12;i++){
 			uint8_t can_id = i+1;
 			motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x01);
@@ -217,12 +218,11 @@ void Init_task(void *p_arg){
 			delay_us(1000000);
 		}	
 
-	
+		CAN1_Init();                //CAN总线配置
 	  CAN2_Init();                //CAN2总线配置
-
 		TX2_USART3_Init();       //TX2通信
-		
 		USART6_Init(); //初始化串口6
+
 
 		
 	  TIM2_PWM_Init();
@@ -243,7 +243,7 @@ void Init_task(void *p_arg){
 
 		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
 	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
-		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
+//		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);
 // 
 	OS_TaskSuspend((OS_TCB*)&InitTaskTCB,&err);		   //		

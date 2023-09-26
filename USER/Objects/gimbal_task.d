@@ -57,6 +57,7 @@
 .\objects\gimbal_task.o: ..\HARDWARE\delay.h
 .\objects\gimbal_task.o: ..\HARDWARE\pstwo.h
 .\objects\gimbal_task.o: ..\HARDWARE\uart3.h
+.\objects\gimbal_task.o: ..\HARDWARE\uart6.h
 .\objects\gimbal_task.o: ..\HARDWARE\pwm.h
 .\objects\gimbal_task.o: ..\HARDWARE\imu.h
 .\objects\gimbal_task.o: ..\HARDWARE\gpio.h

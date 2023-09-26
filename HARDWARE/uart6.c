@@ -19,6 +19,19 @@ __IO uint8_t uart6Buf[128];
 __IO int head = 0;
 __IO int tail  = 0;
 
+static uint8_t rx_buffer[256]; // 接收缓冲区
+static uint16_t rx_index = 0;  // 接收缓冲区索引
+static uint8_t header_count = 0; // 用于检测0xFFFF开头
+
+// 有关STS3032的反馈参数
+uint16_t STS3032_Pos;
+int STS3032_Speed;
+int STS3032_Load;
+int STS3032_Voltage;
+int STS3032_Temper;
+int STS3032_Move;
+int STS3032_Current;
+
 void Uart6_Flush(void)
 {
 	head = tail = 0;
@@ -63,8 +76,8 @@ void USART6_Init(void)
 		USART_Init(USART6, &usart); 
 		
 		nvic.NVIC_IRQChannel = USART6_IRQn;
-		nvic.NVIC_IRQChannelPreemptionPriority=1;
-		nvic.NVIC_IRQChannelSubPriority =0;		
+		nvic.NVIC_IRQChannelPreemptionPriority=2;
+		nvic.NVIC_IRQChannelSubPriority =2;		
 		nvic.NVIC_IRQChannelCmd = ENABLE;			
 		NVIC_Init(&nvic);	 
 		
@@ -77,25 +90,56 @@ void USART6_Init(void)
 
 void USART6_IRQHandler(void)
 {  				
-	if(USART_GetFlagStatus(USART6,USART_FLAG_ORE)!=RESET)
-	{
+		if(USART_GetFlagStatus(USART6,USART_FLAG_ORE)!=RESET)
+		{
 		(void)USART6->SR;   
 		(void)USART6->DR;
 		return;
-	}
-	 if (USART_GetFlagStatus(USART6, USART_FLAG_ORE) != RESET)//防止接受数据太快导致溢出
-   {  	
+		}
+		if (USART_GetFlagStatus(USART6, USART_FLAG_ORE) != RESET)//防止接受数据太快导致溢出
+		{  	
 		//清除中断标志    		 
 		(void)USART6->SR;   
 		(void)USART6->DR;
 		return;			
-   }
-	if(USART_GetITStatus(USART6, USART_IT_RXNE))
-	{     
-		  uart6Buf[tail] = USART_ReceiveData(USART6);
-	    tail = (tail+1)%128;;	
-		  //USART6_Handler();
 		}
+    if (USART_GetITStatus(USART6, USART_IT_RXNE)) {
+        uint8_t byte = USART_ReceiveData(USART6); // 读取接收到的字节
+
+        // 检查数据包开头0xFFFF
+        if (byte == 0xFF && header_count == 0) {
+            header_count++;
+        } else if (byte == 0xFF && header_count == 1) {
+            header_count = 0;
+            rx_index = 0;
+            rx_buffer[rx_index++] = 0xFF;
+            rx_buffer[rx_index++] = 0xFF;
+        } else if (rx_index > 0) {
+            rx_buffer[rx_index++] = byte;
+
+            // 当接收到预期数量的字节后
+            if (rx_index == 8) { // sts3032舵机的回传信息
+                // 计算接收到的数据的checksum校验码
+                uint8_t calculated_checksum = ~(rx_buffer[2]+rx_buffer[3]+rx_buffer[4]+rx_buffer[5]+rx_buffer[6]); // 不包括checksum和帧头字段
+
+                // 提取接收到的checksum校验码
+                uint8_t received_checksum = rx_buffer[rx_index - 1];
+
+                // 对比校验码
+                if (calculated_checksum == received_checksum) {
+										STS3032_Pos =  (rx_buffer[5] << 8) | rx_buffer[6];
+										
+                } else {
+                    // 校验失败，可能需要错误处理
+                }
+
+                // 重置接收缓冲区索引
+                rx_index = 0;
+            }
+        }
+    }
+
+    // 清除接收中断标志
 		USART_ClearFlag(USART6, USART_FLAG_RXNE);  
 		USART_ClearITPendingBit(USART6, USART_IT_RXNE);   
 //		OSIntExit(); 
@@ -118,6 +162,19 @@ void Uart6_Send(uint8_t *buf , uint8_t len)
 		while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
 	}
 	while(USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET);
+}
+
+void STS3032_ServoReadPos(void)	// 读取ID=1的STS3032的位置读取指令
+{
+	// 发送读取指令
+	uint8_t packet[8] = {0xFF, 0xFF, 0x01, 0x04, 0x02, 0x38, 0x02, 0xBE};
+	// 发送指令到USART6
+	for(uint8_t i=0;i< sizeof(packet);i++){
+		// send to the usart6
+		USART_ClearFlag(USART6,USART_FLAG_TC);
+		USART_SendData(USART6,packet[i]);
+		while(USART_GetFlagStatus(USART6,USART_FLAG_TXE)==RESET);//判断是否发送完成
+	}
 }
 
 

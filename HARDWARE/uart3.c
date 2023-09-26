@@ -73,12 +73,6 @@ int fputc(int ch,FILE *f)
 }
 
 
-// 定义一个联合体，用于存储接收到的数据
-static union{
-		u8 data[15];
-		float ActVal[3];
-}sbus_rx3_buffer;
-
 
 // USART3初始化函数
 void TX2_USART3_Init(void)
@@ -143,16 +137,7 @@ int32_t snake_motor_position[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};	// 存放
 void USART3_IRQHandler(void)
 {  					
 		//	OSIntEnter();
-	 
-		// 检查是否有溢出错误
-		if(USART_GetFlagStatus(USART3,USART_FLAG_ORE)!=RESET)
-		{
-			(void)USART3->SR;   
-			(void)USART3->DR;
-			return;
-		}
-		
-		
+
 		// 清除溢出标志
 		if (USART_GetFlagStatus(USART3, USART_FLAG_ORE) != RESET)//防止接受数据太快导致溢出
 		{  	
