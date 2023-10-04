@@ -7,7 +7,7 @@
 #include "pwm.h"
 #include "imu.h"
 #include "gpio.h"
-#include "Judge_System.h"
+#include "uart8.h"
 #include "pstwo.h"
 #include "includes.h"
 #include "uart6.h"
@@ -222,6 +222,7 @@ void Init_task(void *p_arg){
 	  CAN2_Init();                //CAN2总线配置
 		TX2_USART3_Init();       //TX2通信
 		USART6_Init(); //初始化串口6
+		uart8_init(); //初始化串口8
 
 
 		
@@ -241,7 +242,7 @@ void Init_task(void *p_arg){
   	
 	
 
-		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
+//		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
 	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
 //		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);

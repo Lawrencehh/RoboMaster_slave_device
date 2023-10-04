@@ -17,7 +17,7 @@ void USART6_Init(void);
 void USART6_IRQHandler(void);
 void USART6_Handler(void);
 void Uart6_Send(uint8_t *buf , uint8_t len);
-void STS3032_ServoReadPos(void);	// 读取ID=1的STS3032的位置读取指令
+
 
 #endif
 

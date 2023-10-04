@@ -24,11 +24,11 @@ int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 
 
 // 计算GM6020绝对位置的参数
-int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-8191）
-int16_t GM6020_current_raw_position;  // 当前的原始位置（0-8191）
+int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-360）
+int16_t GM6020_current_raw_position;  // 当前的原始位置（0-360）
 // 计算C610绝对位置的参数
-int16_t C610_last_raw_position;  // 上一次的原始位置（0-8191）
-int16_t C610_current_raw_position;  // 当前的原始位置（0-8191）
+int16_t C610_last_raw_position;  // 上一次的原始位置（0-360）
+int16_t C610_current_raw_position;  // 当前的原始位置（0-360）
 
 // 这个函数用于初始化CAN1接口。它设置了GPIO、NVIC（中断控制器）、CAN过滤器等。
 void CAN1_Init(void)
@@ -206,7 +206,7 @@ void CAN1_RX0_IRQHandler(void)
 					//手部电机
 					case 0x00000205:				// GM6020 回传数据，ID=1	
 					{
-						GripperMotor_205_t.position = (rx_message.Data[0]<<8)|rx_message.Data[1];
+						GripperMotor_205_t.position = ((rx_message.Data[0]<<8)|rx_message.Data[1]) *360/8192;;
 						GripperMotor_205_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
 						GripperMotor_205_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
 						GripperMotor_205_t.temperature = rx_message.Data[6];
@@ -214,7 +214,7 @@ void CAN1_RX0_IRQHandler(void)
 					
 					case 0x00000201:				// C610 回传数据，ID=1	
 					{
-						GripperMotor_201_t.position = (rx_message.Data[0]<<8)|rx_message.Data[1];
+						GripperMotor_201_t.position = ((rx_message.Data[0]<<8)|rx_message.Data[1])*360/8192;
 						GripperMotor_201_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
 						GripperMotor_201_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
 						GripperMotor_201_t.temperature = rx_message.Data[6];

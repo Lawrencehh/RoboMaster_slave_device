@@ -7,6 +7,7 @@
 
 #include "stm32f4xx.h"
 #include "uart6.h"
+#include "uart8.h"
 
 uint32_t IOTimeOut = 5000;//输入输出超时
 uint8_t wBuf[128];
@@ -19,6 +20,7 @@ int readSCSTimeOut(unsigned char *nDat, int nLen, uint32_t TimeOut)
 	uint32_t t_user = 0;
 	while(1){
 		ComData = Uart6_Read();
+//		ComData = Uart8_Read();
 		if(ComData!=-1){
 			if(nDat){
 				nDat[Size] = ComData;
@@ -43,6 +45,7 @@ int readSCS(unsigned char *nDat, int nLen)
 	int ComData;
 	uint32_t t_user = 0;
 	while(1){
+//		ComData = Uart8_Read();
 		ComData = Uart6_Read();
 		if(ComData!=-1){
 			if(nDat){
@@ -96,6 +99,7 @@ void rFlushSCS()
 {
 	nopDelay();
 	Uart6_Flush();
+//	Uart8_Flush();
 }
 
 //发送缓冲区刷新
@@ -103,6 +107,7 @@ void wFlushSCS()
 {
 	if(wLen){
 		Uart6_Send(wBuf, wLen);
+//		Uart8_Send(wBuf, wLen);
 		wLen = 0;
 	}
 }

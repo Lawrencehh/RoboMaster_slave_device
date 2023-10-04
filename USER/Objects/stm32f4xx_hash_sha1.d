@@ -2,7 +2,7 @@
 .\objects\stm32f4xx_hash_sha1.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h
 .\objects\stm32f4xx_hash_sha1.o: ..\USER\stm32f4xx.h
 .\objects\stm32f4xx_hash_sha1.o: ..\STM32\CORE\core_cm4.h
-.\objects\stm32f4xx_hash_sha1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\stm32f4xx_hash_sha1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\stm32f4xx_hash_sha1.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\stm32f4xx_hash_sha1.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\stm32f4xx_hash_sha1.o: ..\STM32\CORE\core_cm4_simd.h

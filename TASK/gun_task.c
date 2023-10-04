@@ -9,7 +9,7 @@
 #include "imu.h"
 #include "gpio.h"
 #include "includes.h"
-#include "Judge_System.h"
+#include "uart8.h"
 
 #include "SCServo.h" // ·ÉÌØ´®¿Ú¶æ»ú
 #include "SMS_STS.h"

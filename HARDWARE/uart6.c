@@ -164,18 +164,7 @@ void Uart6_Send(uint8_t *buf , uint8_t len)
 	while(USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET);
 }
 
-void STS3032_ServoReadPos(void)	// 读取ID=1的STS3032的位置读取指令
-{
-	// 发送读取指令
-	uint8_t packet[8] = {0xFF, 0xFF, 0x01, 0x04, 0x02, 0x38, 0x02, 0xBE};
-	// 发送指令到USART6
-	for(uint8_t i=0;i< sizeof(packet);i++){
-		// send to the usart6
-		USART_ClearFlag(USART6,USART_FLAG_TC);
-		USART_SendData(USART6,packet[i]);
-		while(USART_GetFlagStatus(USART6,USART_FLAG_TXE)==RESET);//判断是否发送完成
-	}
-}
+
 
 
 

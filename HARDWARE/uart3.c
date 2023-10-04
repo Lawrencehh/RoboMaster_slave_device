@@ -136,7 +136,7 @@ int32_t snake_motor_position[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};	// 存放
 // USART3中断处理函数
 void USART3_IRQHandler(void)
 {  					
-		//	OSIntEnter();
+		OSIntEnter();
 
 		// 清除溢出标志
 		if (USART_GetFlagStatus(USART3, USART_FLAG_ORE) != RESET)//防止接受数据太快导致溢出
@@ -213,6 +213,7 @@ void USART3_IRQHandler(void)
     // 清除接收中断标志
     USART_ClearFlag(USART3, USART_FLAG_RXNE);
     USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+		OSIntExit();
 }
 
 
