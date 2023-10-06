@@ -128,21 +128,16 @@ void C610_update_pid()
 															STS3032舵机控制
 ****************************************************************************/
 
-
-
-void STS3032_ServoControl(void)
-{
-	WritePosEx(1, 2000, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
-	// 第一个参数是ID号，默认为1
-	// 第二个参数是位置，一圈为4096
-	// 第三个参数是最高速度 （pulse/s）
-	// 第四个参数是加速度 （pulse/s^2）
-	
+void STS3032_ServoControl(void){
+	// 仅当值改变的时候执行指令
+	if(gripper_sts3032_position_control != last_sts3032_control_value){
+		WritePosEx(1, gripper_sts3032_position_control*4096/360, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
+		// 第一个参数是ID号，默认为1
+		// 第二个参数是位置，一圈为4096
+		// 第三个参数是最高速度 （pulse/s）
+		// 第四个参数是加速度 （pulse/s^2）
+	}
 }
-
-
-
-
 /****************************************************************************/
 
 void Gimbal_task(void *p_arg)
@@ -155,9 +150,8 @@ void Gimbal_task(void *p_arg)
 	{  	
 			GM6020_update_pid(); // 更新GM6020_PID控制器
 			C610_update_pid();  // 更新C610_PID控制器
-		
-//			STS3032_ServoReadPos(); // 发送读取STS3032舵机的编码器值
-
+			
+			STS3032_ServoControl();
 
 			OSTimeDly(2,OS_OPT_TIME_PERIODIC,&err); //延时10ms
   } 

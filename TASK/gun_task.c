@@ -14,7 +14,8 @@
 #include "SCServo.h" // 飞特串口舵机
 #include "SMS_STS.h"
 
-int continue_flag=0; // 不可以删除，淦
+int continue_flag=0; 
+
 
 
 
@@ -23,6 +24,7 @@ void Gun_task(void *p_arg)
 	OS_ERR err;
 	while(1)
 	{  
+		
 		OSTimeDly(10,OS_OPT_TIME_PERIODIC,&err); //延时10ms	
 	}
 } 
@@ -55,5 +57,4 @@ void tmr2_callback(void *p_tmr, void *p_arg)
 //      again_spin=0;
 //	    time_again_flag=1;  
 }
-
 

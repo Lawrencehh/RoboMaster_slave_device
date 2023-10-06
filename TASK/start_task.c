@@ -237,12 +237,12 @@ void Init_task(void *p_arg){
 		GM6020_last_raw_position = GripperMotor_205_t.position;  // 上一次的原始位置（0-8191）
 		GM6020_current_raw_position = GripperMotor_205_t.position;  // 当前的原始位置（0-8191）
 		// 初始化C610 pid控制的所用的当前位置参数
-		C610_last_raw_position = GripperMotor_205_t.position;  // 上一次的原始位置（0-8191）
+		C610_last_raw_position = GripperMotor_201_t.position;  // 上一次的原始位置（0-8191）
 		C610_current_raw_position = GripperMotor_201_t.position;  // 当前的原始位置（0-8191）
   	
 	
 
-//		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
+		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
 	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
 //		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);

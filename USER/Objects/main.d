@@ -3,7 +3,7 @@
 .\objects\main.o: ..\HARDWARE\sys.h
 .\objects\main.o: ..\USER\stm32f4xx.h
 .\objects\main.o: ..\STM32\CORE\core_cm4.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\main.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\main.o: ..\STM32\CORE\core_cm4_simd.h
@@ -30,12 +30,12 @@
 .\objects\main.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 .\objects\main.o: ..\TASK\task.h
 .\objects\main.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\main.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: ..\UCOS-III\uCOS-III\Source\os.h
 .\objects\main.o: ..\UCOS-III\uCOS_CONFIG\os_cfg.h
 .\objects\main.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h

@@ -1,7 +1,7 @@
 .\objects\bsp.o: ..\UCOS-III\UCOS_BSP\bsp.c
 .\objects\bsp.o: ..\UCOS-III\UCOS_BSP\bsp.h
-.\objects\bsp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\bsp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\bsp.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\bsp.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
 .\objects\bsp.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h
 .\objects\bsp.o: ..\UCOS-III\uC-CPU\cpu_def.h
 .\objects\bsp.o: ..\UCOS-III\uCOS_CONFIG\cpu_cfg.h
@@ -16,7 +16,7 @@
 .\objects\bsp.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h
 .\objects\bsp.o: ..\USER\stm32f4xx.h
 .\objects\bsp.o: ..\STM32\CORE\core_cm4.h
-.\objects\bsp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\bsp.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\bsp.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\bsp.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\bsp.o: ..\STM32\CORE\core_cm4_simd.h

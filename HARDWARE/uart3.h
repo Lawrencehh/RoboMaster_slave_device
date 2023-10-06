@@ -23,7 +23,9 @@ extern int16_t gripper_gm6020_position_control;
 extern int16_t gripper_c610_position_control;
 // gripper sts3032 的位置控制
 extern int16_t gripper_sts3032_position_control;
+extern int16_t last_sts3032_control_value;
 // 传感器清零控制
 extern int16_t reset_control;
+
 
 #endif

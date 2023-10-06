@@ -2,7 +2,7 @@
 .\objects\uart1.o: ..\HARDWARE\uart1.h
 .\objects\uart1.o: ..\USER\stm32f4xx.h
 .\objects\uart1.o: ..\STM32\CORE\core_cm4.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\uart1.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\uart1.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\uart1.o: ..\STM32\CORE\core_cm4_simd.h
@@ -28,12 +28,12 @@
 .\objects\uart1.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h
 .\objects\uart1.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 .\objects\uart1.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\uart1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\uart1.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
 .\objects\uart1.o: ..\UCOS-III\uCOS-III\Source\os.h
 .\objects\uart1.o: ..\UCOS-III\uCOS_CONFIG\os_cfg.h
 .\objects\uart1.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h

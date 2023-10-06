@@ -135,8 +135,9 @@ int16_t gripper_gm6020_position_control = 1;
 int16_t gripper_c610_position_control = 1;
 // gripper sts3032 的位置控制
 int16_t gripper_sts3032_position_control = 1;
+int16_t last_sts3032_control_value = 1;
 // 传感器清零控制
-int16_t reset_control = 1;
+int16_t reset_control = 0;
 
 
 
@@ -206,6 +207,7 @@ void USART3_IRQHandler(void)
 												offset += 3;
 												gripper_c610_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
 												offset += 3;
+												last_sts3032_control_value = gripper_sts3032_position_control; // 取得上一次的值
 												gripper_sts3032_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
 												offset += 3;
 												reset_control = rx_buffer[offset++];

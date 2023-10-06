@@ -39,20 +39,20 @@ void Chasis_task(void *p_arg)
 			
 			
 /************************************************************* 
-			send snake motors encorder position to the master device
+			send motors encorder position to the master device
 ***************************************************************/
-			uint8_t packet[68] = {0}; 			
+			uint8_t packet[79] = {0}; 			
 			// header: 0xAA55
 			packet[0] = 0xAA;
 			packet[1] = 0x55;
 			// id: 0x01
 			packet[2] = 0x01;
-			// data length: 0x40 (1 + 1 + 12 * 5 + 2)
-			packet[3] = 0x40;
+			// data length: 0x4B (1 + 1 + 12 * 5 + 3*3 + 2 + 2)
+			packet[3] = 0x4B;
 			// function code: 0x41
 			packet[4] = 0x41;
-			// motors number: 0x0C (12)
-			packet[5] = 0x0C;
+			// motors number: 0x10 (16)
+			packet[5] = 0x10;
 			// sensors data
 			int idx = 6;
 			for (int i = 0; i < 12; ++i) {
@@ -64,6 +64,22 @@ void Chasis_task(void *p_arg)
 					packet[idx++] = (currentPosition_snake[i] 		) & 0xFF;
 					
 			}
+			// GM6020
+			packet[idx++] =13;
+			packet[idx++] = (GripperMotor_205_t.position >> 8) & 0xFF;
+			packet[idx++] = GripperMotor_205_t.position & 0xFF;
+			// C610
+			packet[idx++] =14;
+			packet[idx++] = (GripperMotor_201_t.position >> 8) & 0xFF;
+			packet[idx++] = GripperMotor_201_t.position & 0xFF;
+			// STS3032
+			packet[idx++] =15;
+			packet[idx++] = (gripper_sts3032_position_control >> 8) & 0xFF;
+			packet[idx++] = gripper_sts3032_position_control & 0xFF;
+			// Reset state
+			packet[idx++] =16;
+			packet[idx++] = reset_control & 0xFF;
+			
 			// CRC-16 modbus
 			uint16_t crc = calc_crc16_modbus(packet, idx);
 			packet[idx++] = (crc >> 8) & 0xFF; 
