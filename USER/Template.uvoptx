@@ -395,27 +395,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>2</WinNumber>
-          <ItemText>gripper_c610_position_control,0x0A</ItemText>
+          <ItemText>reset_control,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>2</WinNumber>
-          <ItemText>gripper_gm6020_position_control,0x0A</ItemText>
+          <ItemText>gripper_sts3032_position_control,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>GM6020_absolute_position,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>gripper_sts3032_position_control,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>reset_control</ItemText>
+          <ItemText>gripper_sts3032_position_reset_offset,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

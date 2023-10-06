@@ -1,7 +1,7 @@
 .\objects\scserail.o: ..\HARDWARE\SCSerail.c
 .\objects\scserail.o: ..\USER\stm32f4xx.h
 .\objects\scserail.o: ..\STM32\CORE\core_cm4.h
-.\objects\scserail.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\scserail.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\scserail.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\scserail.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\scserail.o: ..\STM32\CORE\core_cm4_simd.h

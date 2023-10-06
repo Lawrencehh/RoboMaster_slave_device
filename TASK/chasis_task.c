@@ -27,16 +27,17 @@ void Chasis_task(void *p_arg)
 				uint8_t bytes[4];  // 用于存储4个字节的数组
 				uint8_t can_id = i + 1;
 				// 分解 int32_t 变量为4个字节
-				bytes[0] = (snake_motor_position_control[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
-				bytes[1] = (snake_motor_position_control[i] >> 16) & 0xFF;  // 次高有效字节
-				bytes[2] = (snake_motor_position_control[i] >> 8) & 0xFF;   // 次低有效字节
-				bytes[3] = snake_motor_position_control[i] & 0xFF;          // 最低有效字节 (LSB)
+				bytes[0] = ((snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) >> 24) & 0xFF;  // 最高有效字节 (MSB)
+				bytes[1] = ((snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) >> 16) & 0xFF;  // 次高有效字节
+				bytes[2] = ((snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) >> 8) & 0xFF;   // 次低有效字节
+				bytes[3] = (snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) & 0xFF;          // 最低有效字节 (LSB)
 				setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
 				delay_us(200);
 				// reading the encorder
 				readSnakeEncorder(can_id,0x02,0x03,0x07);
 			}
 			
+
 			
 /************************************************************* 
 			send motors encorder position to the master device
@@ -47,7 +48,7 @@ void Chasis_task(void *p_arg)
 			packet[1] = 0x55;
 			// id: 0x01
 			packet[2] = 0x01;
-			// data length: 0x4B (1 + 1 + 12 * 5 + 3*3 + 2 + 2)
+			// data length: 0x4B (1 + 1 + 12 * 5 + 3*3 + 2 + 2) = 75
 			packet[3] = 0x4B;
 			// function code: 0x41
 			packet[4] = 0x41;
@@ -58,24 +59,24 @@ void Chasis_task(void *p_arg)
 			for (int i = 0; i < 12; ++i) {
 					packet[idx++] = i + 1;  // encorder addresss
 					// encorder data
-					packet[idx++] = (currentPosition_snake[i] >> 24) & 0xFF;  
-					packet[idx++] = (currentPosition_snake[i] >> 16) & 0xFF;
-					packet[idx++] = (currentPosition_snake[i] >> 8) & 0xFF;
-					packet[idx++] = (currentPosition_snake[i] 		) & 0xFF;
+					packet[idx++] = ((currentPosition_snake[i]-snake_motor_position_reset_offset[i]) >> 24) & 0xFF;  
+					packet[idx++] = ((currentPosition_snake[i]-snake_motor_position_reset_offset[i]) >> 16) & 0xFF;
+					packet[idx++] = ((currentPosition_snake[i]-snake_motor_position_reset_offset[i]) >> 8) & 0xFF;
+					packet[idx++] = ((currentPosition_snake[i]-snake_motor_position_reset_offset[i]) 		) & 0xFF;
 					
 			}
 			// GM6020
 			packet[idx++] =13;
-			packet[idx++] = (GripperMotor_205_t.position >> 8) & 0xFF;
-			packet[idx++] = GripperMotor_205_t.position & 0xFF;
+			packet[idx++] = ((GripperMotor_205_t.position-gripper_gm6020_position_reset_offset) >> 8) & 0xFF;
+			packet[idx++] = (GripperMotor_205_t.position-gripper_gm6020_position_reset_offset) & 0xFF;
 			// C610
 			packet[idx++] =14;
-			packet[idx++] = (GripperMotor_201_t.position >> 8) & 0xFF;
-			packet[idx++] = GripperMotor_201_t.position & 0xFF;
+			packet[idx++] = ((GripperMotor_201_t.position-gripper_c610_position_reset_offset) >> 8) & 0xFF;
+			packet[idx++] = (GripperMotor_201_t.position-gripper_c610_position_reset_offset) & 0xFF;
 			// STS3032
 			packet[idx++] =15;
-			packet[idx++] = (gripper_sts3032_position_control >> 8) & 0xFF;
-			packet[idx++] = gripper_sts3032_position_control & 0xFF;
+			packet[idx++] = ((gripper_sts3032_position_control-gripper_sts3032_position_reset_offset) >> 8) & 0xFF;
+			packet[idx++] = (gripper_sts3032_position_control-gripper_sts3032_position_reset_offset) & 0xFF;
 			// Reset state
 			packet[idx++] =16;
 			packet[idx++] = reset_control & 0xFF;

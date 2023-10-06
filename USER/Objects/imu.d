@@ -2,7 +2,7 @@
 .\objects\imu.o: ..\HARDWARE\imu.h
 .\objects\imu.o: ..\USER\stm32f4xx.h
 .\objects\imu.o: ..\STM32\CORE\core_cm4.h
-.\objects\imu.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\imu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\imu.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\imu.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\imu.o: ..\STM32\CORE\core_cm4_simd.h

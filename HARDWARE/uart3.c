@@ -138,6 +138,10 @@ int16_t gripper_sts3032_position_control = 1;
 int16_t last_sts3032_control_value = 1;
 // 传感器清零控制
 int16_t reset_control = 0;
+int32_t snake_motor_position_reset_offset[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int16_t gripper_gm6020_position_reset_offset = 0;
+int16_t gripper_c610_position_reset_offset = 0;
+int16_t gripper_sts3032_position_reset_offset = 0;
 
 
 

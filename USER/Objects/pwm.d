@@ -2,7 +2,7 @@
 .\objects\pwm.o: ..\HARDWARE\pwm.h
 .\objects\pwm.o: ..\USER\stm32f4xx.h
 .\objects\pwm.o: ..\STM32\CORE\core_cm4.h
-.\objects\pwm.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\pwm.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\pwm.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\pwm.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\pwm.o: ..\STM32\CORE\core_cm4_simd.h
