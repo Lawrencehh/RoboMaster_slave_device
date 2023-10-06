@@ -14,7 +14,16 @@ void tmr2_callback(void *p_tmr, void *p_arg);
 
 extern float Camera_Inc_Pitch,Camera_Inc_Yaw,Camera_Distance;
 extern u8 NewData_flag;
-extern int32_t snake_motor_position[12];
+extern int32_t snake_motor_position_control[12];
 extern const uint16_t crc16_table[256];
+
+// gripper gm6020 的位置控制
+extern int16_t gripper_gm6020_position_control;
+// gripper c610 的位置控制
+extern int16_t gripper_c610_position_control;
+// gripper sts3032 的位置控制
+extern int16_t gripper_sts3032_position_control;
+// 传感器清零控制
+extern int16_t reset_control;
 
 #endif

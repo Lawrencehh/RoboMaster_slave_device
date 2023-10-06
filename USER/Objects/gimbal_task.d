@@ -2,7 +2,7 @@
 .\objects\gimbal_task.o: ..\HARDWARE\can1.h
 .\objects\gimbal_task.o: ..\USER\stm32f4xx.h
 .\objects\gimbal_task.o: ..\STM32\CORE\core_cm4.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\gimbal_task.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\gimbal_task.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\gimbal_task.o: ..\STM32\CORE\core_cm4_simd.h
@@ -31,12 +31,12 @@
 .\objects\gimbal_task.o: ..\TASK\task.h
 .\objects\gimbal_task.o: ..\HARDWARE\sys.h
 .\objects\gimbal_task.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\gimbal_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\gimbal_task.o: ..\UCOS-III\uCOS-III\Source\os.h
 .\objects\gimbal_task.o: ..\UCOS-III\uCOS_CONFIG\os_cfg.h
 .\objects\gimbal_task.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h
@@ -58,7 +58,6 @@
 .\objects\gimbal_task.o: ..\HARDWARE\pstwo.h
 .\objects\gimbal_task.o: ..\HARDWARE\uart3.h
 .\objects\gimbal_task.o: ..\HARDWARE\uart6.h
-.\objects\gimbal_task.o: ..\HARDWARE\uart8.h
 .\objects\gimbal_task.o: ..\HARDWARE\pwm.h
 .\objects\gimbal_task.o: ..\HARDWARE\imu.h
 .\objects\gimbal_task.o: ..\HARDWARE\gpio.h

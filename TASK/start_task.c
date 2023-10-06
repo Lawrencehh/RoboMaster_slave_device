@@ -7,7 +7,7 @@
 #include "pwm.h"
 #include "imu.h"
 #include "gpio.h"
-#include "uart8.h"
+//#include "uart8.h"
 #include "pstwo.h"
 #include "includes.h"
 #include "uart6.h"
@@ -222,7 +222,7 @@ void Init_task(void *p_arg){
 	  CAN2_Init();                //CAN2总线配置
 		TX2_USART3_Init();       //TX2通信
 		USART6_Init(); //初始化串口6
-		uart8_init(); //初始化串口8
+//		uart8_init(); //初始化串口8
 
 
 		

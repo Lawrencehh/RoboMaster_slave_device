@@ -60,7 +60,6 @@
 ".\objects\sms_sts.o"
 ".\objects\gimbal_min_task.o"
 ".\objects\scserail.o"
-".\objects\uart8.o"
 ".\objects\bsp.o"
 ".\objects\lib_ascii.o"
 ".\objects\lib_math.o"

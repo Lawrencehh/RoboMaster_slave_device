@@ -3,7 +3,7 @@
 .\objects\delay.o: ..\HARDWARE\sys.h
 .\objects\delay.o: ..\USER\stm32f4xx.h
 .\objects\delay.o: ..\STM32\CORE\core_cm4.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\delay.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\delay.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\delay.o: ..\STM32\CORE\core_cm4_simd.h
@@ -29,12 +29,12 @@
 .\objects\delay.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h
 .\objects\delay.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 .\objects\delay.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\delay.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\delay.o: ..\UCOS-III\uCOS-III\Source\os.h
 .\objects\delay.o: ..\UCOS-III\uCOS_CONFIG\os_cfg.h
 .\objects\delay.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h

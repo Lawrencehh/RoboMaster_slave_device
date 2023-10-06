@@ -905,17 +905,16 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=.\objects\startup_stm32f427xx.d -o.\objects\startup_stm32f42
-7xx.o -I.\RTE\_Template -ID:\LenovoSoftstore\KEIK5MDK\Arm\Packs\Keil\STM32F4xx_
-DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -ID:\LenovoSoftstore\KEIK5
-MDK\ARM\CMSIS\Include --predefine="__UVISION_VERSION SETA 530" --predefine="STM
+7xx.o -IC:\Users\LG\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\C
+MSIS\Device\ST\STM32F4xx\Include --predefine="__UVISION_VERSION SETA 534" --pre
+define="STM32F427xx SETA 1" --list=.\listings\startup_stm32f427xx.lst ..\STM32\
 
 
 
 ARM Macro Assembler    Page 15 
 
 
-32F427xx SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\startup_stm32f427
-xx.lst ..\STM32\CORE\startup_stm32f427xx.s
+CORE\startup_stm32f427xx.s
 
 
 
@@ -2088,4 +2087,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-455 symbols in table
+454 symbols in table

@@ -4,7 +4,7 @@
 #include "uart3.h"
 #include "task.h"
 #include "delay.h"
-#include "uart8.h"
+//#include "uart8.h"
 #include "gpio.h"
 //#include "pstwo.h"
 #include "pwm.h"
@@ -27,10 +27,10 @@ void Chasis_task(void *p_arg)
 				uint8_t bytes[4];  // 用于存储4个字节的数组
 				uint8_t can_id = i + 1;
 				// 分解 int32_t 变量为4个字节
-				bytes[0] = (snake_motor_position[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
-				bytes[1] = (snake_motor_position[i] >> 16) & 0xFF;  // 次高有效字节
-				bytes[2] = (snake_motor_position[i] >> 8) & 0xFF;   // 次低有效字节
-				bytes[3] = snake_motor_position[i] & 0xFF;          // 最低有效字节 (LSB)
+				bytes[0] = (snake_motor_position_control[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
+				bytes[1] = (snake_motor_position_control[i] >> 16) & 0xFF;  // 次高有效字节
+				bytes[2] = (snake_motor_position_control[i] >> 8) & 0xFF;   // 次低有效字节
+				bytes[3] = snake_motor_position_control[i] & 0xFF;          // 最低有效字节 (LSB)
 				setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
 				delay_us(200);
 				// reading the encorder

@@ -5,7 +5,7 @@
 #include "pstwo.h"
 #include "uart3.h"
 #include "uart6.h"
-#include "uart8.h"
+//#include "uart8.h"
 #include "pwm.h"
 #include "imu.h"
 #include "gpio.h"
@@ -21,7 +21,7 @@ void USART6_Init(void);
 /****************************************************************************
 													GM6020电机的PID代码
 ****************************************************************************/
-int32_t GM6020_setpoint = 30;  // 设定点
+
 int32_t GM6020_output_limit = 30000; // 对输出电压作出限制
 int32_t GM6020_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
 int32_t GM6020_absolute_position = 0;  // 绝对位置
@@ -49,7 +49,7 @@ void GM6020_update_pid() {
 		}
 		// 计算绝对位置
 		GM6020_absolute_position = GM6020_current_raw_position + GM6020_rotation_count * 360;
-    GM6020_error = GM6020_setpoint - GM6020_absolute_position;  // 计算误差
+    GM6020_error = gripper_gm6020_position_control - GM6020_absolute_position;  // 计算误差
     GM6020_integral += GM6020_error;                // 计算误差积分
     GM6020_derivative = GM6020_error - GM6020_prev_error;  // 计算误差微分
     // 计算输出电压
@@ -74,7 +74,6 @@ void GM6020_update_pid() {
 /****************************************************************************
 													C610电机的PID代码
 ****************************************************************************/
-int32_t C610_setpoint = 72000;  // 设定点
 int32_t C610_output_limit = 10000; // 对输出电流作出限制
 int32_t C610_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
 int32_t C610_absolute_position = 0;  // 绝对位置
@@ -103,7 +102,7 @@ void C610_update_pid()
 		}
 		// 计算绝对位置
 		C610_absolute_position = C610_current_raw_position + C610_rotation_count * 360;
-    C610_error = C610_setpoint - C610_absolute_position;  // 计算误差
+    C610_error = gripper_c610_position_control - C610_absolute_position;  // 计算误差
     C610_integral += C610_error;                // 计算误差积分
     C610_derivative = C610_error - C610_prev_error;  // 计算误差微分
     // 计算输出电压
@@ -157,7 +156,7 @@ void Gimbal_task(void *p_arg)
 			GM6020_update_pid(); // 更新GM6020_PID控制器
 			C610_update_pid();  // 更新C610_PID控制器
 		
-			STS3032_ServoReadPos(); // 发送读取STS3032舵机的编码器值
+//			STS3032_ServoReadPos(); // 发送读取STS3032舵机的编码器值
 
 
 			OSTimeDly(2,OS_OPT_TIME_PERIODIC,&err); //延时10ms

@@ -2,7 +2,7 @@
 .\objects\can2.o: ..\HARDWARE\can2.h
 .\objects\can2.o: ..\USER\stm32f4xx.h
 .\objects\can2.o: ..\STM32\CORE\core_cm4.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\can2.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\can2.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\can2.o: ..\STM32\CORE\core_cm4_simd.h
@@ -31,12 +31,12 @@
 .\objects\can2.o: ..\TASK\task.h
 .\objects\can2.o: ..\HARDWARE\sys.h
 .\objects\can2.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\can2.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\can2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\can2.o: ..\UCOS-III\uCOS-III\Source\os.h
 .\objects\can2.o: ..\UCOS-III\uCOS_CONFIG\os_cfg.h
 .\objects\can2.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h

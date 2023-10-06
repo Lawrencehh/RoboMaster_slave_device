@@ -444,12 +444,11 @@ ARM Macro Assembler    Page 7
   310 00000220         
   311 00000220                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
-interwork --depend=.\objects\lib_mem_a.d -o.\objects\lib_mem_a.o -I.\RTE\_Templ
-ate -ID:\LenovoSoftstore\KEIK5MDK\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\C
-MSIS\Device\ST\STM32F4xx\Include -ID:\LenovoSoftstore\KEIK5MDK\ARM\CMSIS\Includ
-e --predefine="__UVISION_VERSION SETA 530" --predefine="STM32F427xx SETA 1" --p
-redefine="_RTE_ SETA 1" --list=.\listings\lib_mem_a.lst ..\UCOS-III\uC-LIB\Port
-s\ARM-Cortex-M4\RealView\lib_mem_a.asm
+interwork --depend=.\objects\lib_mem_a.d -o.\objects\lib_mem_a.o -IC:\Users\LG\
+AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32
+F4xx\Include --predefine="__UVISION_VERSION SETA 534" --predefine="STM32F427xx 
+SETA 1" --list=.\listings\lib_mem_a.lst ..\UCOS-III\uC-LIB\Ports\ARM-Cortex-M4\
+RealView\lib_mem_a.asm
 
 
 
@@ -675,4 +674,4 @@ em_a.asm
 em_a.asm
 
 18 symbols
-352 symbols in table
+351 symbols in table

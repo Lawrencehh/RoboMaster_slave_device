@@ -2,7 +2,7 @@
 .\objects\chasis_task.o: ..\HARDWARE\can1.h
 .\objects\chasis_task.o: ..\USER\stm32f4xx.h
 .\objects\chasis_task.o: ..\STM32\CORE\core_cm4.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\chasis_task.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\chasis_task.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\chasis_task.o: ..\STM32\CORE\core_cm4_simd.h
@@ -33,12 +33,12 @@
 .\objects\chasis_task.o: ..\TASK\task.h
 .\objects\chasis_task.o: ..\HARDWARE\sys.h
 .\objects\chasis_task.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\chasis_task.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\chasis_task.o: ..\UCOS-III\uCOS-III\Source\os.h
 .\objects\chasis_task.o: ..\UCOS-III\uCOS_CONFIG\os_cfg.h
 .\objects\chasis_task.o: ..\UCOS-III\uC-CPU\ARM-Cortex-M4\RealView\cpu.h
@@ -57,6 +57,5 @@
 .\objects\chasis_task.o: ..\UCOS-III\uCOS_CONFIG\app_cfg.h
 .\objects\chasis_task.o: ..\UCOS-III\UCOS_BSP\bsp.h
 .\objects\chasis_task.o: ..\HARDWARE\delay.h
-.\objects\chasis_task.o: ..\HARDWARE\uart8.h
 .\objects\chasis_task.o: ..\HARDWARE\gpio.h
 .\objects\chasis_task.o: ..\HARDWARE\pwm.h

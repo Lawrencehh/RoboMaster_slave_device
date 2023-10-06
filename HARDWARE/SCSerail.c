@@ -7,7 +7,7 @@
 
 #include "stm32f4xx.h"
 #include "uart6.h"
-#include "uart8.h"
+//#include "uart8.h"
 
 uint32_t IOTimeOut = 5000;//ÊäÈëÊä³ö³¬Ê±
 uint8_t wBuf[128];

@@ -2,7 +2,7 @@
 #include "includes.h"
 #include "can1.h"	
 #include "task.h"	
-#include "uart8.h"
+//#include "uart8.h"
 
 u8 sbus_rx_buffer[2][20]={0};//Ë«»º³åÊý×é
 Tel_Ctrl_t TelCtrlData;

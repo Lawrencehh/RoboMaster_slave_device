@@ -128,7 +128,15 @@ uint8_t function_code;      // 功能码
 
 // 初始化电机信息数组，每个绳驱电机有一个地址和一个速度
 // 假设最多有12个电机（单臂蛇形连续体）
-int32_t snake_motor_position[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};	// 存放12个绳驱电机的速度控制指令
+int32_t snake_motor_position_control[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};	// 存放12个绳驱电机的速度控制指令
+// gripper gm6020 的位置控制
+int16_t gripper_gm6020_position_control = 1;
+// gripper c610 的位置控制
+int16_t gripper_c610_position_control = 1;
+// gripper sts3032 的位置控制
+int16_t gripper_sts3032_position_control = 1;
+// 传感器清零控制
+int16_t reset_control = 1;
 
 
 
@@ -188,11 +196,19 @@ void USART3_IRQHandler(void)
 												// 解析电机信息
 												uint16_t offset = 6; // 电机信息从索引6开始
 												uint8_t motor_address;	// 定义电机地址字段
-												for (uint8_t i = 0; i < motor_count; ++i) {
+												for (uint8_t i = 0; i < 12; ++i) {
 														motor_address = rx_buffer[offset++]-1;	// 取得电机地址数据
-														snake_motor_position[motor_address] = (rx_buffer[offset] << 24) | (rx_buffer[offset + 1] << 16) | (rx_buffer[offset + 2] << 8) | rx_buffer[offset + 3];
+														snake_motor_position_control[motor_address] = (rx_buffer[offset] << 24) | (rx_buffer[offset + 1] << 16) | (rx_buffer[offset + 2] << 8) | rx_buffer[offset + 3];
 														offset += 4;
 												}
+												offset += 1;
+												gripper_gm6020_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
+												offset += 3;
+												gripper_c610_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
+												offset += 3;
+												gripper_sts3032_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
+												offset += 3;
+												reset_control = rx_buffer[offset++];
 										}
 										
                 } else {
