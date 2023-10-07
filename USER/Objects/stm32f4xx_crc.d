@@ -2,7 +2,7 @@
 .\objects\stm32f4xx_crc.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h
 .\objects\stm32f4xx_crc.o: ..\USER\stm32f4xx.h
 .\objects\stm32f4xx_crc.o: ..\STM32\CORE\core_cm4.h
-.\objects\stm32f4xx_crc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\stm32f4xx_crc.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\stm32f4xx_crc.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\stm32f4xx_crc.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\stm32f4xx_crc.o: ..\STM32\CORE\core_cm4_simd.h

@@ -215,6 +215,16 @@ void USART3_IRQHandler(void)
 												gripper_sts3032_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
 												offset += 3;
 												reset_control = rx_buffer[offset++];
+												
+												// 如果收到清零指令，则将offset设定为当前值
+												if(reset_control == 1){
+													for(int i = 0; i < 12; i++){
+															snake_motor_position_reset_offset[i] = currentPosition_snake[i];			
+													}
+													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
+													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
+													reset_control = 0;
+												}		
 										}
 										
                 } else {

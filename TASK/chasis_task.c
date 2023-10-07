@@ -26,12 +26,17 @@ void Chasis_task(void *p_arg)
 			for(uint8_t i=0; i < 12; i++){
 				uint8_t bytes[4];  // 用于存储4个字节的数组
 				uint8_t can_id = i + 1;
+				if(reset_control){
+					snake_motor_position_control[i]=0;
+				}
+				if(reset_control == 0){
 				// 分解 int32_t 变量为4个字节
 				bytes[0] = ((snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) >> 24) & 0xFF;  // 最高有效字节 (MSB)
 				bytes[1] = ((snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) >> 16) & 0xFF;  // 次高有效字节
 				bytes[2] = ((snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) >> 8) & 0xFF;   // 次低有效字节
 				bytes[3] = (snake_motor_position_control[i]+snake_motor_position_reset_offset[i]) & 0xFF;          // 最低有效字节 (LSB)
-				setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
+				setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；					
+				}
 				delay_us(200);
 				// reading the encorder
 				readSnakeEncorder(can_id,0x02,0x03,0x07);
@@ -75,8 +80,8 @@ void Chasis_task(void *p_arg)
 			packet[idx++] = (GripperMotor_201_t.position-gripper_c610_position_reset_offset) & 0xFF;
 			// STS3032
 			packet[idx++] =15;
-			packet[idx++] = ((gripper_sts3032_position_control-gripper_sts3032_position_reset_offset) >> 8) & 0xFF;
-			packet[idx++] = (gripper_sts3032_position_control-gripper_sts3032_position_reset_offset) & 0xFF;
+			packet[idx++] = (gripper_sts3032_position_control >> 8) & 0xFF;
+			packet[idx++] = gripper_sts3032_position_control & 0xFF;
 			// Reset state
 			packet[idx++] =16;
 			packet[idx++] = reset_control & 0xFF;

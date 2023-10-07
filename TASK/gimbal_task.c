@@ -37,6 +37,8 @@ int32_t GM6020_integral = 0;   // 误差积分
 int32_t GM6020_derivative; 	// 误差微分			
 // 更新GM6020_PID控制器
 void GM6020_update_pid() {
+	
+
 		// 计算位置差
 		GM6020_position_difference = GM6020_current_raw_position - GM6020_last_raw_position;
 		// 检查是否有位置包裹
@@ -48,6 +50,9 @@ void GM6020_update_pid() {
 				}
 		}
 		// 计算绝对位置
+		if(reset_control){
+			gripper_gm6020_position_control=0;
+		}
 		GM6020_absolute_position = GM6020_current_raw_position + GM6020_rotation_count * 360 - gripper_gm6020_position_reset_offset;
     GM6020_error = gripper_gm6020_position_control - GM6020_absolute_position;  // 计算误差
     GM6020_integral += GM6020_error;                // 计算误差积分
@@ -62,18 +67,21 @@ void GM6020_update_pid() {
     }
 		GM6020_output = PID_GM6020_Velocity(GM6020_output,GripperMotor_205_t.velocity); // pid for velocity
 		// 发送控制指令
-		GM6020_Can_Send_Msg(GM6020_output,0,0,0);
+		if(reset_control == 0){
+			GM6020_Can_Send_Msg(GM6020_output,0,0,0);
+		}
     GM6020_prev_error = GM6020_error;  // 更新上一次的误差
 		// 更新上一次的原始位置
 		GM6020_last_raw_position = GM6020_current_raw_position;
 		// 更新当前位置
 		GM6020_current_raw_position = GripperMotor_205_t.position; 
+
 }
 
-int32_t PID_C610_Velocity(int32_t target_velocity,int32_t current_velocity) 
+int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity) 
 {
-	const float Kp =1;  //16.5
-	const float Ki=0.001f;   //0.03
+	const float Kp =10;  //16.5
+	const float Ki=0;   //0.03
 	const float Kd =0.0f;
     
 	static float error_v[2] = {0.0,0.0};
@@ -84,16 +92,17 @@ int32_t PID_C610_Velocity(int32_t target_velocity,int32_t current_velocity)
 	error_v[1] = target_velocity - current_velocity;	
 	error_sum += error_v[1];
 
-	if(error_sum > 1000)  error_sum =  1000;      //
-	else if(error_sum < -1000) error_sum = -1000;
+	if(error_sum > 10000)  error_sum =  10000;      //
+	else if(error_sum < -10000) error_sum = -10000;
 	error = error_v[1]  * Kp 
 				 +  error_sum * Ki 
 				 + (error_v[1] - error_v[0]) * Kd; 
 	
-	if(error > 20000)  error = 20000;
-	else if(error < -20000) error = -20000;
+	if(error > GM6020_output_limit)  error = GM6020_output_limit;
+	else if(error < -GM6020_output_limit) error = -GM6020_output_limit;
 	return error;
 }
+
 /****************************************************************************/
 
 /****************************************************************************
@@ -126,6 +135,9 @@ void C610_update_pid()
 				}
 		}
 		// 计算绝对位置
+		if(reset_control){
+			gripper_c610_position_control=0;
+		}
 		C610_absolute_position = C610_current_raw_position + C610_rotation_count * 360 - gripper_c610_position_reset_offset;
     C610_error = gripper_c610_position_control - C610_absolute_position;  // 计算误差
     C610_integral += C610_error;                // 计算误差积分
@@ -140,18 +152,21 @@ void C610_update_pid()
     }
 		C610_output = PID_C610_Velocity(C610_output,GripperMotor_201_t.velocity); // pid for velocity
 		// 发送控制指令
+		if(reset_control == 0){
 		C610_Can_Send_Msg(C610_output,0,0,0);
+		}
     C610_prev_error = C610_error;  // 更新上一次的误差
 		// 更新上一次的原始位置
 		C610_last_raw_position = C610_current_raw_position;
 		// 更新当前位置
 		C610_current_raw_position = GripperMotor_201_t.position; 
+		
 }
 	
-int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity) 
+int32_t PID_C610_Velocity(int32_t target_velocity,int32_t current_velocity) 
 {
-	const float Kp =10;  //16.5
-	const float Ki=0;   //0.03
+	const float Kp =1;  //16.5
+	const float Ki=0.001f;   //0.03
 	const float Kd =0.0f;
     
 	static float error_v[2] = {0.0,0.0};
@@ -162,16 +177,17 @@ int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity)
 	error_v[1] = target_velocity - current_velocity;	
 	error_sum += error_v[1];
 
-	if(error_sum > 10000)  error_sum =  10000;      //
-	else if(error_sum < -10000) error_sum = -10000;
+	if(error_sum > 1000)  error_sum =  1000;      //
+	else if(error_sum < -1000) error_sum = -1000;
 	error = error_v[1]  * Kp 
 				 +  error_sum * Ki 
 				 + (error_v[1] - error_v[0]) * Kd; 
 	
-	if(error > GM6020_output_limit)  error = GM6020_output_limit;
-	else if(error < -GM6020_output_limit) error = -GM6020_output_limit;
+	if(error > 20000)  error = 20000;
+	else if(error < -20000) error = -20000;
 	return error;
 }
+
 /****************************************************************************/
 
 /****************************************************************************
@@ -179,18 +195,22 @@ int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity)
 ****************************************************************************/
 
 void STS3032_ServoControl(void){
+	
 	// 仅当值改变的时候执行指令
 	if(gripper_sts3032_position_control != last_sts3032_control_value){
 		int16_t position_control = 0;
+		
 		position_control = (gripper_sts3032_position_control+gripper_sts3032_position_reset_offset)*4096/360;
 		position_control = (position_control % 4096 + 4096) % 4096; // 确保为0-4095的正整数
-		
+		if(reset_control){
+			position_control=0;
+		}
 		if(reset_control != 1){
-		WritePosEx(1, position_control, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
-		// 第一个参数是ID号，默认为1
-		// 第二个参数是位置，一圈为4096
-		// 第三个参数是最高速度 （pulse/s）
-		// 第四个参数是加速度 （pulse/s^2）
+			WritePosEx(1, position_control, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
+			// 第一个参数是ID号，默认为1
+			// 第二个参数是位置，一圈为4096
+			// 第三个参数是最高速度 （pulse/s）
+			// 第四个参数是加速度 （pulse/s^2）
 		}
 	}
 }
@@ -204,16 +224,7 @@ void Gimbal_task(void *p_arg)
 	STS3032_ServoControl();
 	while(1)
 	{  	
-			// 如果收到清零指令，则将offset设定为当前值
-			if(reset_control == 1){
-				for(int i = 0; i < 12; i++){
-						snake_motor_position_reset_offset[i] = currentPosition_snake[i];			
-				}
-				gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
-				gripper_c610_position_reset_offset = GripperMotor_201_t.position;
-				gripper_sts3032_position_reset_offset = last_sts3032_control_value + gripper_sts3032_position_reset_offset;
-				reset_control = 0;
-			}			
+	
 			
 			GM6020_update_pid(); // 更新GM6020_PID控制器
 			C610_update_pid();  // 更新C610_PID控制器
