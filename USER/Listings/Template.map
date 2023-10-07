@@ -58,12 +58,6 @@ Section Cross References
     gun_task.o(i.tmr1_callback) refers to gun_task.o(.data) for continue_flag
     start_task.o(i.Init_task) refers to misc.o(i.NVIC_PriorityGroupConfig) for NVIC_PriorityGroupConfig
     start_task.o(i.Init_task) refers to gpio.o(i.User_GPIO_Init) for User_GPIO_Init
-    start_task.o(i.Init_task) refers to can1.o(i.motorEnable) for motorEnable
-    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetCurrent) for setMotorTargetCurrent
-    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetSpeed) for setMotorTargetSpeed
-    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetAcspeed) for setMotorTargetAcspeed
-    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetDespeed) for setMotorTargetDespeed
-    start_task.o(i.Init_task) refers to delay.o(i.delay_us) for delay_us
     start_task.o(i.Init_task) refers to can1.o(i.CAN1_Init) for CAN1_Init
     start_task.o(i.Init_task) refers to can2.o(i.CAN2_Init) for CAN2_Init
     start_task.o(i.Init_task) refers to uart3.o(i.TX2_USART3_Init) for TX2_USART3_Init
@@ -72,6 +66,12 @@ Section Cross References
     start_task.o(i.Init_task) refers to pwm.o(i.TIM4_PWM_Init) for TIM4_PWM_Init
     start_task.o(i.Init_task) refers to pwm.o(i.TIM5_PWM_Init) for TIM5_PWM_Init
     start_task.o(i.Init_task) refers to pwm.o(i.TIM8_PWM_Init) for TIM8_PWM_Init
+    start_task.o(i.Init_task) refers to can1.o(i.motorEnable) for motorEnable
+    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetCurrent) for setMotorTargetCurrent
+    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetSpeed) for setMotorTargetSpeed
+    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetAcspeed) for setMotorTargetAcspeed
+    start_task.o(i.Init_task) refers to can1.o(i.setMotorTargetDespeed) for setMotorTargetDespeed
+    start_task.o(i.Init_task) refers to delay.o(i.delay_us) for delay_us
     start_task.o(i.Init_task) refers to os_task.o(i.OS_TaskResume) for OS_TaskResume
     start_task.o(i.Init_task) refers to os_task.o(i.OS_TaskSuspend) for OS_TaskSuspend
     start_task.o(i.Init_task) refers to can1.o(.data) for GripperMotor_205_t
