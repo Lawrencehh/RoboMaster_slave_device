@@ -14,12 +14,12 @@
 .\objects\os_cpu_c.o: ..\UCOS-III\uCOS-III\Source\os_type.h
 .\objects\os_cpu_c.o: ..\UCOS-III\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView\os_cpu.h
 .\objects\os_cpu_c.o: ..\UCOS-III\uCOS_CONFIG\includes.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\string.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\ctype.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdarg.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\math.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\os_cpu_c.o: ..\UCOS-III\uC-LIB\lib_math.h
 .\objects\os_cpu_c.o: ..\UCOS-III\uCOS_CONFIG\app_cfg.h
 .\objects\os_cpu_c.o: ..\UCOS-III\UCOS_BSP\bsp.h
@@ -27,7 +27,7 @@
 .\objects\os_cpu_c.o: ..\STM32\FWLIB\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h
 .\objects\os_cpu_c.o: ..\USER\stm32f4xx.h
 .\objects\os_cpu_c.o: ..\STM32\CORE\core_cm4.h
-.\objects\os_cpu_c.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\os_cpu_c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\os_cpu_c.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\os_cpu_c.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\os_cpu_c.o: ..\STM32\CORE\core_cm4_simd.h

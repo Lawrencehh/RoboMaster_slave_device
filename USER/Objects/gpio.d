@@ -2,7 +2,7 @@
 .\objects\gpio.o: ..\HARDWARE\gpio.h
 .\objects\gpio.o: ..\USER\stm32f4xx.h
 .\objects\gpio.o: ..\STM32\CORE\core_cm4.h
-.\objects\gpio.o: D:\LenovoSoftstore\KEIK5MDK\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\gpio.o: ..\DSP-LIB\inc\core_cmInstr.h
 .\objects\gpio.o: ..\DSP-LIB\inc\core_cmFunc.h
 .\objects\gpio.o: ..\STM32\CORE\core_cm4_simd.h

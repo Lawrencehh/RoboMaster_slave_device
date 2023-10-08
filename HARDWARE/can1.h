@@ -45,8 +45,10 @@ extern int32_t currentPosition_snake[12];
 
 extern int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-8191）
 extern int16_t GM6020_current_raw_position;  // 当前的原始位置（0-8191）
+extern int32_t GM6020_rotation_count;  // 旋转计数（每完成一圈增加1或减少1）
 
 extern int16_t C610_last_raw_position;  // 上一次的原始位置（0-8191）
 extern int16_t C610_current_raw_position;  // 当前的原始位置（0-8191）
+extern int32_t C610_rotation_count;
 
 #endif

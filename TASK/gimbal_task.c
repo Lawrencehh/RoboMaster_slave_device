@@ -23,7 +23,7 @@ void USART6_Init(void);
 ****************************************************************************/
 
 int32_t GM6020_output_limit = 30000; // 对输出电压作出限制
-int32_t GM6020_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
+
 int32_t GM6020_absolute_position = 0;  // 绝对位置
 int32_t GM6020_error = 0; // 误差值
 int32_t GM6020_position_difference = 0; // 计算位置差
@@ -50,9 +50,6 @@ void GM6020_update_pid() {
 				}
 		}
 		// 计算绝对位置
-		if(reset_control){
-			gripper_gm6020_position_control=0;
-		}
 		GM6020_absolute_position = GM6020_current_raw_position + GM6020_rotation_count * 360 - gripper_gm6020_position_reset_offset;
     GM6020_error = gripper_gm6020_position_control - GM6020_absolute_position;  // 计算误差
     GM6020_integral += GM6020_error;                // 计算误差积分
@@ -109,7 +106,7 @@ int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity)
 													C610电机的PID代码
 ****************************************************************************/
 int32_t C610_output_limit = 10000; // 对输出电流作出限制
-int32_t C610_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
+
 int32_t C610_absolute_position = 0;  // 绝对位置
 int32_t C610_error = 0; // 误差值
 int32_t C610_position_difference = 0; // 计算位置差
@@ -135,9 +132,6 @@ void C610_update_pid()
 				}
 		}
 		// 计算绝对位置
-		if(reset_control){
-			gripper_c610_position_control=0;
-		}
 		C610_absolute_position = C610_current_raw_position + C610_rotation_count * 360 - gripper_c610_position_reset_offset;
     C610_error = gripper_c610_position_control - C610_absolute_position;  // 计算误差
     C610_integral += C610_error;                // 计算误差积分
@@ -199,19 +193,15 @@ void STS3032_ServoControl(void){
 	// 仅当值改变的时候执行指令
 	if(gripper_sts3032_position_control != last_sts3032_control_value){
 		int16_t position_control = 0;
+		position_control = (gripper_sts3032_position_control + gripper_sts3032_position_reset_offset)*4096/360;
+		position_control = (position_control  % 4096 + 4096) % 4096; // 确保为0-4095的正整数
+
+		WritePosEx(1, position_control, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
+		// 第一个参数是ID号，默认为1
+		// 第二个参数是位置，一圈为4096
+		// 第三个参数是最高速度 （pulse/s）
+		// 第四个参数是加速度 （pulse/s^2）
 		
-		position_control = (gripper_sts3032_position_control+gripper_sts3032_position_reset_offset)*4096/360;
-		position_control = (position_control % 4096 + 4096) % 4096; // 确保为0-4095的正整数
-		if(reset_control){
-			position_control=0;
-		}
-		if(reset_control != 1){
-			WritePosEx(1, position_control, 2250, 50);//舵机(ID1),以最高速度V=2250步/秒,加速度A=50(50*100步/秒^2),运行至P1=4095
-			// 第一个参数是ID号，默认为1
-			// 第二个参数是位置，一圈为4096
-			// 第三个参数是最高速度 （pulse/s）
-			// 第四个参数是加速度 （pulse/s^2）
-		}
 	}
 }
 /****************************************************************************/

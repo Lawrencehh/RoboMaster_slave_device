@@ -26,9 +26,11 @@ int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 // 计算GM6020绝对位置的参数
 int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-360）
 int16_t GM6020_current_raw_position;  // 当前的原始位置（0-360）
+int32_t GM6020_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
 // 计算C610绝对位置的参数
 int16_t C610_last_raw_position;  // 上一次的原始位置（0-360）
 int16_t C610_current_raw_position;  // 当前的原始位置（0-360）
+int32_t C610_rotation_count = 0;  // 旋转计数（每完成一圈增加1或减少1）
 
 // 这个函数用于初始化CAN1接口。它设置了GPIO、NVIC（中断控制器）、CAN过滤器等。
 void CAN1_Init(void)
