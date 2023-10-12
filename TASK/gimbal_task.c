@@ -24,7 +24,6 @@ void USART6_Init(void);
 
 int32_t GM6020_output_limit = 30000; // 对输出电压作出限制
 
-int32_t GM6020_absolute_position = 0;  // 绝对位置
 int32_t GM6020_error = 0; // 误差值
 int32_t GM6020_position_difference = 0; // 计算位置差
 // PID参数
@@ -107,7 +106,6 @@ int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity)
 ****************************************************************************/
 int32_t C610_output_limit = 10000; // 对输出电流作出限制
 
-int32_t C610_absolute_position = 0;  // 绝对位置
 int32_t C610_error = 0; // 误差值
 int32_t C610_position_difference = 0; // 计算位置差
 // PID参数

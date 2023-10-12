@@ -80,12 +80,12 @@ void Chasis_task(void *p_arg)
 			}
 			// GM6020
 			packet[idx++] =13;
-			packet[idx++] = ((GripperMotor_205_t.position - gripper_gm6020_position_reset_offset) >> 8) & 0xFF;
-			packet[idx++] = (GripperMotor_205_t.position - gripper_gm6020_position_reset_offset) & 0xFF;
+			packet[idx++] = (GM6020_absolute_position >> 8) & 0xFF;
+			packet[idx++] = GM6020_absolute_position & 0xFF;
 			// C610
 			packet[idx++] =14;
-			packet[idx++] = ((GripperMotor_201_t.position - gripper_c610_position_reset_offset) >> 8) & 0xFF;
-			packet[idx++] = (GripperMotor_201_t.position - gripper_c610_position_reset_offset) & 0xFF;
+			packet[idx++] = (C610_absolute_position >> 8) & 0xFF;
+			packet[idx++] = C610_absolute_position & 0xFF;
 			// STS3032
 			packet[idx++] =15;
 			packet[idx++] = (gripper_sts3032_position_control >> 8) & 0xFF;
