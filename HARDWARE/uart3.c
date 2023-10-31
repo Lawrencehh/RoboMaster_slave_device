@@ -128,7 +128,7 @@ uint8_t function_code;      // 功能码
 
 // 初始化电机信息数组，每个绳驱电机有一个地址和一个速度
 // 假设最多有12个电机（单臂蛇形连续体）
-int32_t snake_motor_position_control[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};	// 存放12个绳驱电机的速度控制指令
+int32_t snake_motor_position_control[12];	// 存放12个绳驱电机位置控制指令
 // gripper gm6020 的位置控制
 int16_t gripper_gm6020_position_control = 0;
 // gripper c610 的位置控制
@@ -218,9 +218,21 @@ void USART3_IRQHandler(void)
 												
 												// 如果收到清零指令，则将offset设定为当前值
 												if(reset_control == 1){
-													for(int i = 0; i < 12; i++){
-															snake_motor_position_reset_offset[i] = currentPosition_snake[i];			
+
+													for(uint8_t i=0; i < 12; i++){
+															uint8_t bytes[4];  // 用于存储4个字节的数组
+															uint8_t can_id = i + 1;
+															snake_motor_position_reset_offset[i] = -currentPosition_snake[i];
+																		
+															// 分解 int32_t 变量为4个字节
+															bytes[0] = (snake_motor_position_reset_offset[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
+															bytes[1] = (snake_motor_position_reset_offset[i] >> 16) & 0xFF;  // 次高有效字节
+															bytes[2] = (snake_motor_position_reset_offset[i] >> 8) & 0xFF;   // 次低有效字节
+															bytes[3] = snake_motor_position_reset_offset[i] & 0xFF;          // 最低有效字节 (LSB)
+															delay_us(200);
+															setMotorPositionOffset(can_id,0x06,0x01,0x3B,bytes[0],bytes[1],bytes[2],bytes[3]); //设定位置偏移值，32位有符号数；	
 													}
+													
 													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
 													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
 													GM6020_rotation_count = 0;

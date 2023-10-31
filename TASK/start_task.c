@@ -226,11 +226,15 @@ void Init_task(void *p_arg){
 		for(uint8_t i=0;i<12;i++){
 			uint8_t can_id = i+1;
 			motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x01);
+			delay_us(200);
 			setMotorTargetCurrent(can_id,0x06,0x01,0x08,0x00,0x00,0x07,0xd0);
+			delay_us(200);
 			setMotorTargetSpeed(can_id,0x06,0x01,0x09,0x00,0x00,0x2a,0xaa);
+			delay_us(200);
 			setMotorTargetAcspeed(can_id,0x06,0x01,0x0B,0x00,0x10,0xAA,0xAA);
-			setMotorTargetDespeed(can_id,0x06,0x01,0x0B,0x00,0x10,0xAA,0xAA);		
-			delay_us(1000000);
+			delay_us(200);
+			setMotorTargetDespeed(can_id,0x06,0x01,0x0C,0x00,0x10,0xAA,0xAA);		
+			delay_us(200);
 		}	
 
 		
@@ -244,8 +248,8 @@ void Init_task(void *p_arg){
   	
 	
 
-		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
-	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //ÔÆÌ¨
+//		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
+//	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //ÔÆÌ¨
 //		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);
 // 

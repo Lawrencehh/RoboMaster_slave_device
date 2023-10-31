@@ -352,6 +352,25 @@ void setMotorTargetPosition(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
     CAN_Transmit(CAN1,&tx_message);
 }
 
+// 设置电机位置偏移值，D0为电机ID号码，D1为0x01写入，D2为0x3B位置的偏置参数值
+void setMotorPositionOffset(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5)
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+	  tx_message.Data[2] = D2;
+    tx_message.Data[3] = D3;
+	  tx_message.Data[4] = D4;
+    tx_message.Data[5] = D5;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
 // 读取电机电流
 void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1)
 {
