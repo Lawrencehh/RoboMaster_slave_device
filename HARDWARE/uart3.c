@@ -218,21 +218,20 @@ void USART3_IRQHandler(void)
 												
 												// 如果收到清零指令，则将offset设定为当前值
 												if(reset_control == 1){
-
 													for(uint8_t i=0; i < 12; i++){
 															uint8_t bytes[4];  // 用于存储4个字节的数组
 															uint8_t can_id = i + 1;
-															snake_motor_position_reset_offset[i] = -currentPosition_snake[i];
+															snake_motor_position_reset_offset[i] = -currentPosition_snake[i] + snake_motor_position_reset_offset[i];
 																		
 															// 分解 int32_t 变量为4个字节
 															bytes[0] = (snake_motor_position_reset_offset[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
 															bytes[1] = (snake_motor_position_reset_offset[i] >> 16) & 0xFF;  // 次高有效字节
 															bytes[2] = (snake_motor_position_reset_offset[i] >> 8) & 0xFF;   // 次低有效字节
 															bytes[3] = snake_motor_position_reset_offset[i] & 0xFF;          // 最低有效字节 (LSB)
-															delay_us(200);
+															delay_us(500);
 															setMotorPositionOffset(can_id,0x06,0x01,0x3B,bytes[0],bytes[1],bytes[2],bytes[3]); //设定位置偏移值，32位有符号数；	
 													}
-													
+													delay_us(500);
 													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
 													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
 													GM6020_rotation_count = 0;

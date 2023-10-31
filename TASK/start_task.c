@@ -207,7 +207,7 @@ void Init_task(void *p_arg){
   	User_GPIO_Init();
 		
 	
-
+		time_counter = 0;
 		CAN1_Init();                //CAN总线配置
 	  CAN2_Init();                //CAN2总线配置
 		TX2_USART3_Init();       //TX2通信
@@ -248,8 +248,8 @@ void Init_task(void *p_arg){
   	
 	
 
-//		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
-//	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
+		OS_TaskResume((OS_TCB*)&CHASISTaskTCB,&err);
+	  OS_TaskResume((OS_TCB*)&GIMBALTaskTCB,&err);     //云台
 //		OS_TaskResume((OS_TCB*)&GUNTaskTCB,&err);
 //		OS_TaskResume((OS_TCB*)&TIMETaskTCB,&err);
 // 

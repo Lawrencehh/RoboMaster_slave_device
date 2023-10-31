@@ -21,6 +21,7 @@ int flag;
 int16_t receive[4];
 int16_t adc_U;
 int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+int32_t time_counter; //用于排除前期的不可靠数据
 
 
 // 计算GM6020绝对位置的参数
@@ -127,105 +128,107 @@ void CAN1_RX0_IRQHandler(void)
 {	
     CanRxMsg rx_message;
     OSIntEnter();
-    if (CAN_GetITStatus(CAN1,CAN_IT_FMP0)!= RESET)
+    if ((CAN_GetITStatus(CAN1,CAN_IT_FMP0)!= RESET) )
 		{
         CAN_ClearITPendingBit(CAN1, CAN_IT_FMP0);
         CAN_Receive(CAN1, CAN_FIFO0, &rx_message); 
 			
-				switch (rx_message.StdId)
-        {
-					case 0x01:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x02:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x03:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x04:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x05:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x06:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x07:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x08:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x09:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x0A:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x0B:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					case 0x0C:   //id
-					{
-						if(rx_message.Data[0]==0x04){
-							currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
-						}
-					}break;	
-					
-					//手部电机
-					case 0x00000205:				// GM6020 回传数据，ID=1	
-					{
-						GripperMotor_205_t.position = ((rx_message.Data[0]<<8)|rx_message.Data[1]) *360/8192;;
-						GripperMotor_205_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						GripperMotor_205_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						GripperMotor_205_t.temperature = rx_message.Data[6];
-					}break;
-					
-					case 0x00000201:				// C610 回传数据，ID=1	
-					{
-						GripperMotor_201_t.position = ((rx_message.Data[0]<<8)|rx_message.Data[1])*360/8192;
-						GripperMotor_201_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
-						GripperMotor_201_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
-						GripperMotor_201_t.temperature = rx_message.Data[6];
-					}break;
+				if(time_counter >= 500) {
+					switch (rx_message.StdId)
+						{
+							case 0x01:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x02:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x03:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x04:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x05:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x06:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x07:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x08:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x09:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x0A:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x0B:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							case 0x0C:   //id
+							{
+								if(rx_message.Data[0]==0x04){
+									currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+								}
+							}break;	
+							
+							//手部电机
+							case 0x00000205:				// GM6020 回传数据，ID=1	
+							{
+								GripperMotor_205_t.position = ((rx_message.Data[0]<<8)|rx_message.Data[1]) *360/8192;;
+								GripperMotor_205_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
+								GripperMotor_205_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
+								GripperMotor_205_t.temperature = rx_message.Data[6];
+							}break;
+							
+							case 0x00000201:				// C610 回传数据，ID=1	
+							{
+								GripperMotor_201_t.position = ((rx_message.Data[0]<<8)|rx_message.Data[1])*360/8192;
+								GripperMotor_201_t.velocity = (rx_message.Data[2]<<8)|rx_message.Data[3];
+								GripperMotor_201_t.current = (rx_message.Data[4]<<8)|rx_message.Data[5];
+								GripperMotor_201_t.temperature = rx_message.Data[6];
+							}break;
 
-					default:
-						break;
+							default:
+								break;
+						}
 				}
 				
 	

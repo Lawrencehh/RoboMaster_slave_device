@@ -16,6 +16,7 @@ void setMotorTargetCurrent(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void setMotorTargetAcspeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void setMotorTargetDespeed(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1);
+void setMotorPositionOffset(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 
 void readSnakeEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1); //读取绳驱电机的编码器值
 
@@ -51,5 +52,6 @@ extern int32_t C610_absolute_position;  // 绝对位置
 extern int16_t C610_last_raw_position;  // 上一次的原始位置（0-8191）
 extern int16_t C610_current_raw_position;  // 当前的原始位置（0-8191）
 extern int32_t C610_rotation_count;
+extern int32_t time_counter;
 
 #endif
