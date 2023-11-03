@@ -26,7 +26,7 @@ void Chasis_task(void *p_arg)
 		delay_us(200);
 		while(1)
 	{  		
-			if(time_counter < 501){
+			if(time_counter < 601){
 				time_counter = time_counter +1;	
 			}
 			// send commands to 12 CAN module to control the position of snake motors

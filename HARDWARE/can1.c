@@ -21,6 +21,7 @@ int flag;
 int16_t receive[4];
 int16_t adc_U;
 int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+int32_t lastPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 int32_t time_counter; //用于排除前期的不可靠数据
 
 
@@ -229,9 +230,17 @@ void CAN1_RX0_IRQHandler(void)
 							default:
 								break;
 						}
+						// 解决跳变的问题
+						if(time_counter >= 502){ 
+								for(int i =0; i < 12; i++){
+										if(abs(currentPosition_snake[i] - lastPosition_snake[i]) > 50000){ 
+											currentPosition_snake[i] = lastPosition_snake[i];											
+										}
+										lastPosition_snake[i] = currentPosition_snake[i];
+								}					
+						}
+						
 				}
-				
-	
 
     }
 		OSIntExit();
