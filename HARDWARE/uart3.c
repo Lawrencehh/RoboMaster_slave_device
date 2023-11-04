@@ -138,6 +138,7 @@ int16_t gripper_sts3032_position_control = 0;
 int16_t last_sts3032_control_value = 0;
 // 传感器清零控制
 int16_t reset_control = 0;
+int16_t last_reset_control = 0;
 int32_t snake_motor_position_reset_offset[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int16_t gripper_gm6020_position_reset_offset = 0;
 int16_t gripper_c610_position_reset_offset = 0;
@@ -214,33 +215,36 @@ void USART3_IRQHandler(void)
 												last_sts3032_control_value = gripper_sts3032_position_control; // 取得上一次的值
 												gripper_sts3032_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
 												offset += 3;
-												reset_control = rx_buffer[offset++];
-												
-												// 如果收到清零指令，则将offset设定为当前值
-												if(reset_control == 1){
-													for(uint8_t i=0; i < 12; i++){
-															uint8_t bytes[4];  // 用于存储4个字节的数组
-															uint8_t can_id = i + 1;
-															snake_motor_position_reset_offset[i] = -currentPosition_snake[i] + snake_motor_position_reset_offset[i];
-																		
-															// 分解 int32_t 变量为4个字节
-															bytes[0] = (snake_motor_position_reset_offset[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
-															bytes[1] = (snake_motor_position_reset_offset[i] >> 16) & 0xFF;  // 次高有效字节
-															bytes[2] = (snake_motor_position_reset_offset[i] >> 8) & 0xFF;   // 次低有效字节
-															bytes[3] = snake_motor_position_reset_offset[i] & 0xFF;          // 最低有效字节 (LSB)
-															delay_us(500);
-															setMotorPositionOffset(can_id,0x06,0x01,0x3B,bytes[0],bytes[1],bytes[2],bytes[3]); //设定位置偏移值，32位有符号数；	
-													}
-													delay_us(500);
-													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
-													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
-													GM6020_rotation_count = 0;
-													C610_rotation_count = 0;
-													gripper_sts3032_position_reset_offset = last_sts3032_control_value + gripper_sts3032_position_reset_offset;
-													reset_control = 0;
-												}		
+												reset_control = rx_buffer[offset++];	
 										}
 										
+										if(reset_control == 6){
+													// snake_motors使能和参数设定
+													for(uint8_t i=0;i<12;i++){
+														uint8_t can_id = i+1;
+														motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x00); // 电机失能
+														delay_us(200);														
+													}										
+										}
+										
+										if(reset_control == 9){
+													// snake_motors使能和参数设定
+													for(uint8_t i=0;i<12;i++){
+														uint8_t can_id = i+1;
+														motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x01);
+														delay_us(200);
+														setMotorTargetCurrent(can_id,0x06,0x01,0x08,0x00,0x00,0x07,0xd0);
+														delay_us(200);
+														setMotorTargetSpeed(can_id,0x06,0x01,0x09,0x00,0x00,0x2a,0xaa);
+														delay_us(200);
+														setMotorTargetAcspeed(can_id,0x06,0x01,0x0B,0x00,0x10,0xAA,0xAA);
+														delay_us(200);
+														setMotorTargetDespeed(can_id,0x06,0x01,0x0C,0x00,0x10,0xAA,0xAA);		
+														delay_us(200);
+													}		
+													reset_control = 0;
+										}
+																				
                 } else {
                     // 校验失败，可能需要错误处理
 										// 这里是串口输出计算出来的crc校验码
@@ -255,7 +259,8 @@ void USART3_IRQHandler(void)
             }
         }
     }
-
+		
+		
     // 清除接收中断标志
     USART_ClearFlag(USART3, USART_FLAG_RXNE);
     USART_ClearITPendingBit(USART3, USART_IT_RXNE);

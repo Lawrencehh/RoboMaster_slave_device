@@ -42,6 +42,7 @@ extern int16_t adc_U,cap_error;
 extern int32_t round_6020_yaw;
 extern float phase_6020_yaw;
 extern int32_t currentPosition_snake[12];
+extern int32_t lastPosition_snake[12];
 
 extern int32_t GM6020_absolute_position;  // 绝对位置
 extern int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-8191）

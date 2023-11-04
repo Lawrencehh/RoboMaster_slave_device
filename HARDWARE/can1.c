@@ -133,6 +133,7 @@ void CAN1_RX0_IRQHandler(void)
 		{
         CAN_ClearITPendingBit(CAN1, CAN_IT_FMP0);
         CAN_Receive(CAN1, CAN_FIFO0, &rx_message); 
+				
 			
 				if(time_counter >= 500) {
 					switch (rx_message.StdId)
@@ -239,6 +240,8 @@ void CAN1_RX0_IRQHandler(void)
 										lastPosition_snake[i] = currentPosition_snake[i];
 								}					
 						}
+						
+						
 						
 				}
 
