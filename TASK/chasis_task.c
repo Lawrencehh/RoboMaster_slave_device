@@ -35,14 +35,14 @@ void Chasis_task(void *p_arg)
 				uint8_t bytes[4];  // 用于存储4个字节的数组
 				uint8_t can_id = i + 1;
 
-				if(reset_control == 0){
+				if(reset_control != 1){
 					motorEnable(can_id,0x06,0x01,0x0F,0x00,0x00,0x00,0x01); // 工作模式为1
-					delay_us(100);
+					delay_us(200);
 					// 分解 int32_t 变量为4个字节
-					bytes[0] = ((snake_motor_position_control[i]) >> 24) & 0xFF;  // 最高有效字节 (MSB)
-					bytes[1] = ((snake_motor_position_control[i]) >> 16) & 0xFF;  // 次高有效字节
-					bytes[2] = ((snake_motor_position_control[i]) >> 8) & 0xFF;   // 次低有效字节
-					bytes[3] = (snake_motor_position_control[i]) & 0xFF;          // 最低有效字节 (LSB)
+					bytes[0] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 24) & 0xFF;  // 最高有效字节 (MSB)
+					bytes[1] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 16) & 0xFF;  // 次高有效字节
+					bytes[2] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 8) & 0xFF;   // 次低有效字节
+					bytes[3] = (snake_motor_position_control[i] + offsetPosition_snake[i]) & 0xFF;          // 最低有效字节 (LSB)
 					if(time_counter >= 500){
 						setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
 					}						
@@ -55,32 +55,28 @@ void Chasis_task(void *p_arg)
 			
 			// 如果收到清零指令，则首先将offset设定为0
 			if(reset_control == 1){
-				for(uint8_t i=0; i < 12; i++){
-						uint8_t can_id = i + 1;			
-						delay_us(200);
-						setMotorPositionOffset(can_id,0x06,0x01,0x3B,0x00,0x00,0x00,0x00); //设定0位置偏移值，32位有符号数；	
-						delay_us(200);
-						// reading the encorder
-						readSnakeEncorder(can_id,0x02,0x03,0x07);
-					
-						uint8_t bytes[4];  // 用于存储4个字节的数组
-						delay_us(200);
-						snake_motor_position_reset_offset[i] = -currentPosition_snake[i];
-						// 分解 int32_t 变量为4个字节
-						bytes[0] = (snake_motor_position_reset_offset[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
-						bytes[1] = (snake_motor_position_reset_offset[i] >> 16) & 0xFF;  // 次高有效字节
-						bytes[2] = (snake_motor_position_reset_offset[i] >> 8) & 0xFF;   // 次低有效字节
-						bytes[3] = snake_motor_position_reset_offset[i] & 0xFF;          // 最低有效字节 (LSB)
-						setMotorPositionOffset(can_id,0x06,0x01,0x3B,bytes[0],bytes[1],bytes[2],bytes[3]); //设定位置偏移值，32位有符号数；
-					
-				}
-				delay_us(200);
-				gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
-				gripper_c610_position_reset_offset = GripperMotor_201_t.position;
-				GM6020_rotation_count = 0;
-				C610_rotation_count = 0;
-				gripper_sts3032_position_reset_offset = last_sts3032_control_value + gripper_sts3032_position_reset_offset;
-				reset_control = 0;
+//				for(uint8_t i=0; i < 12; i++){
+//						uint8_t can_id = i + 1;			
+//						delay_us(200);
+//						setMotorPositionOffset(can_id,0x06,0x01,0x3B,0x00,0x00,0x00,0x00); //设定0位置偏移值，32位有符号数；	
+//						delay_us(200);
+//						// reading the encorder
+//						readSnakeEncorder(can_id,0x02,0x03,0x07);
+//					
+//						uint8_t bytes[4];  // 用于存储4个字节的数组
+//						delay_us(200);
+//						snake_motor_position_reset_offset[i] = -currentPosition_snake[i];
+//						// 分解 int32_t 变量为4个字节
+//						bytes[0] = (snake_motor_position_reset_offset[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
+//						bytes[1] = (snake_motor_position_reset_offset[i] >> 16) & 0xFF;  // 次高有效字节
+//						bytes[2] = (snake_motor_position_reset_offset[i] >> 8) & 0xFF;   // 次低有效字节
+//						bytes[3] = snake_motor_position_reset_offset[i] & 0xFF;          // 最低有效字节 (LSB)
+//						setMotorPositionOffset(can_id,0x06,0x01,0x3B,bytes[0],bytes[1],bytes[2],bytes[3]); //设定位置偏移值，32位有符号数；
+//					
+//				}
+//				delay_us(200);
+				
+
 			}
 
 

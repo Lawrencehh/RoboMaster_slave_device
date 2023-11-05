@@ -21,6 +21,7 @@ int flag;
 int16_t receive[4];
 int16_t adc_U;
 int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+int32_t offsetPosition_snake[12]={-3943,7165,100972,18760,-9625,-3504,14706,7922,-16595,-858,6240,8934};
 int32_t lastPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 int32_t time_counter; //用于排除前期的不可靠数据
 
@@ -141,73 +142,73 @@ void CAN1_RX0_IRQHandler(void)
 							case 0x01:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[0];
 								}
 							}break;	
 							case 0x02:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[1];
 								}
 							}break;	
 							case 0x03:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[2];
 								}
 							}break;	
 							case 0x04:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[3];
 								}
 							}break;	
 							case 0x05:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[4];
 								}
 							}break;	
 							case 0x06:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[5];
 								}
 							}break;	
 							case 0x07:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[6];
 								}
 							}break;	
 							case 0x08:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[7];
 								}
 							}break;	
 							case 0x09:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[8];
 								}
 							}break;	
 							case 0x0A:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[9];
 								}
 							}break;	
 							case 0x0B:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[10];
 								}
 							}break;	
 							case 0x0C:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]);
+									currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[11];
 								}
 							}break;	
 							

@@ -42,6 +42,7 @@ extern int16_t adc_U,cap_error;
 extern int32_t round_6020_yaw;
 extern float phase_6020_yaw;
 extern int32_t currentPosition_snake[12];
+extern int32_t offsetPosition_snake[12];
 extern int32_t lastPosition_snake[12];
 
 extern int32_t GM6020_absolute_position;  // ¾ø¶ÔÎ»ÖÃ

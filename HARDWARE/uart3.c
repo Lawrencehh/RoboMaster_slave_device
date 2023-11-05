@@ -139,7 +139,7 @@ int16_t last_sts3032_control_value = 0;
 // 传感器清零控制
 int16_t reset_control = 0;
 int16_t last_reset_control = 0;
-int32_t snake_motor_position_reset_offset[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 int16_t gripper_gm6020_position_reset_offset = 0;
 int16_t gripper_c610_position_reset_offset = 0;
 int16_t gripper_sts3032_position_reset_offset = 0;
@@ -163,8 +163,9 @@ void USART3_IRQHandler(void)
 		
     // 检查接收中断标志
     if (USART_GetITStatus(USART3, USART_IT_RXNE)) {
+				
         uint8_t byte = USART_ReceiveData(USART3); // 读取接收到的字节
-
+			
         // 检查数据包开头0xAA55
         if (byte == 0xAA && header_count == 0) {
             header_count++;
@@ -217,9 +218,41 @@ void USART3_IRQHandler(void)
 												offset += 3;
 												reset_control = rx_buffer[offset++];	
 										}
-										
-										if(reset_control == 6){
+										if(reset_control == 1){
+													// snake_motors失能和参数设定
+													for(uint8_t i=0;i<12;i++){
+														uint8_t can_id = i+1;
+														motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x00); // 电机失能
+														delay_us(200);														
+													}	
+													// snake_motors_encorders_offset的重新整定
+													for(uint8_t i=0;i<12;i++){
+															offsetPosition_snake[i] = currentPosition_snake[i] + offsetPosition_snake[i];													
+													}					
+													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
+													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
+													GM6020_rotation_count = 0;
+													C610_rotation_count = 0;
+													gripper_sts3032_position_reset_offset = last_sts3032_control_value + gripper_sts3032_position_reset_offset;
+																
 													// snake_motors使能和参数设定
+													for(uint8_t i=0;i<12;i++){
+														uint8_t can_id = i+1;
+														motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x01);
+														delay_us(200);
+														setMotorTargetCurrent(can_id,0x06,0x01,0x08,0x00,0x00,0x07,0xd0);
+														delay_us(200);
+														setMotorTargetSpeed(can_id,0x06,0x01,0x09,0x00,0x00,0x2a,0xaa);
+														delay_us(200);
+														setMotorTargetAcspeed(can_id,0x06,0x01,0x0B,0x00,0x10,0xAA,0xAA);
+														delay_us(200);
+														setMotorTargetDespeed(can_id,0x06,0x01,0x0C,0x00,0x10,0xAA,0xAA);		
+														delay_us(200);
+													}		
+													reset_control = 0;
+										}
+										if(reset_control == 6){
+													// snake_motors失能和参数设定
 													for(uint8_t i=0;i<12;i++){
 														uint8_t can_id = i+1;
 														motorEnable(can_id,0x06,0x01,0x10,0x00,0x00,0x00,0x00); // 电机失能

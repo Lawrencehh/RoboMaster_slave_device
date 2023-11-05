@@ -19,7 +19,7 @@ __IO uint8_t uart6Buf[128];
 __IO int head = 0;
 __IO int tail  = 0;
 
-static uint8_t rx_buffer[256]; // 接收缓冲区
+static uint8_t rx_buffer[1024]; // 接收缓冲区
 static uint16_t rx_index = 0;  // 接收缓冲区索引
 static uint8_t header_count = 0; // 用于检测0xFFFF开头
 
