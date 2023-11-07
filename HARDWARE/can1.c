@@ -135,7 +135,7 @@ void CAN1_RX0_IRQHandler(void)
         CAN_Receive(CAN1, CAN_FIFO0, &rx_message); 
 				
 			
-				if(time_counter >= 500) {
+				if(time_counter >= 100) {
 					switch (rx_message.StdId)
 						{
 							case 0x01:   //id

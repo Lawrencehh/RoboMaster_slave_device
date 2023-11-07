@@ -25,7 +25,7 @@ void Chasis_task(void *p_arg)
 		delay_us(200);
 		while(1)
 	{  		
-			if(time_counter < 601){
+			if(time_counter < 201){
 				time_counter = time_counter +1;	
 			}
 			// send commands to 12 CAN module to control the position of snake motors
@@ -36,18 +36,18 @@ void Chasis_task(void *p_arg)
 
 				if(reset_control != 1){
 					motorEnable(can_id,0x06,0x01,0x0F,0x00,0x00,0x00,0x01); // 工作模式为1
-					delay_us(500);
+					delay_us(200);
 					// 分解 int32_t 变量为4个字节
 					bytes[0] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 24) & 0xFF;  // 最高有效字节 (MSB)
 					bytes[1] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 16) & 0xFF;  // 次高有效字节
 					bytes[2] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 8) & 0xFF;   // 次低有效字节
 					bytes[3] = (snake_motor_position_control[i] + offsetPosition_snake[i]) & 0xFF;          // 最低有效字节 (LSB)
-					if(time_counter >= 500){
+					if(time_counter >= 100){
 						setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
 					}						
 				}
 
-				delay_us(500);
+				delay_us(200);
 				// reading the encorder
 				readSnakeEncorder(can_id,0x02,0x03,0x07);
 			}
