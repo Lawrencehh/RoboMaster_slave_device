@@ -119,11 +119,14 @@ static uint8_t rx_buffer[256]; // 接收缓冲区
 static uint16_t rx_index = 0;  // 接收缓冲区索引
 static uint16_t expected_length = 0; // 预期的数据长度
 static uint8_t header_count = 0; // 用于检测0xAA55开头
+uint16_t calculated_crc;
+uint16_t received_crc;
 
 // 定义一些全局变量
 u8 Receive;
-u8 NewData_flag=0;
+
 uint8_t controller_address; // 控制器地址
+uint8_t motor_address[12];	// 定义电机地址
 uint8_t function_code;      // 功能码
 
 // 初始化电机信息数组，每个绳驱电机有一个地址和一个速度
@@ -138,13 +141,15 @@ int16_t gripper_sts3032_position_control = 0;
 int16_t last_sts3032_control_value = 0;
 // 传感器清零控制
 int16_t reset_control = 0;
-int16_t last_reset_control = 0;
 
 int16_t gripper_gm6020_position_reset_offset = 0;
 int16_t gripper_c610_position_reset_offset = 0;
 int16_t gripper_sts3032_position_reset_offset = 0;
 
 
+// 初始化变量
+uint8_t header_sequence[] = {0xAA, 0x55, 0x01, 0x4B, 0x31, 0x10, 0x01}; // 新的固定帧头序列
+uint8_t header_match_index = 0; // 用于跟踪帧头匹配的位置
 
 
 // USART3中断处理函数
@@ -166,32 +171,42 @@ void USART3_IRQHandler(void)
 				
         uint8_t byte = USART_ReceiveData(USART3); // 读取接收到的字节
 			
-        // 检查数据包开头0xAA55
-        if (byte == 0xAA && header_count == 0) {
-            header_count++;
-        } else if (byte == 0x55 && header_count == 1) {
-            header_count = 0;
-            rx_index = 0;
-            rx_buffer[rx_index++] = 0xAA;
-            rx_buffer[rx_index++] = 0x55;
-        } else if (rx_index > 0) {
-            rx_buffer[rx_index++] = byte;
+			  // 检查数据包开头序列
+				if (byte == header_sequence[header_match_index]) {
+						header_match_index++;
+						
+						// 如果匹配了完整的固定帧头序列
+						if (header_match_index == sizeof(header_sequence)) {
+								header_match_index = 0; // 重置索引
+								rx_index = 0;
+								// 将固定帧头序列复制到rx_buffer中
+								for (uint8_t i = 0; i < sizeof(header_sequence) - 1; ++i) {
+										rx_buffer[rx_index++] = header_sequence[i];
+								}
+						}
+				} else {
+						// 如果接收到的字节不是帧头序列的一部分，则重置匹配索引
+						header_match_index = (byte == header_sequence[0]) ? 1 : 0;
+				}
 
-            // 第四个字节是数据长度
-            if (rx_index == 4) {
-                expected_length = byte;
-            }
+				
+				// 如果已经开始接收数据（匹配了固定帧头） 帧头的最后一位已经可以满足该条件，故需要减去一个
+				if (rx_index >= sizeof(header_sequence) - 1) {
 
-            // 当接收到预期数量的字节后
+						rx_buffer[rx_index++] = byte; // 将接收到的字节存入缓冲区
+
+					// 数据长度在0x AA 55 01之后，一般为4B
+					expected_length = 0x4B;
+						// 当接收到预期数量的字节后
             if (rx_index == expected_length + 4) { // +4 是因为包括开头的2字节、控制器地址、长度字节
                 // 计算接收到的数据的CRC-16 modbus校验码
-                uint16_t calculated_crc = calc_crc16_modbus(rx_buffer, rx_index - 2); // 不包括CRC-16字段
+                calculated_crc = calc_crc16_modbus(rx_buffer, rx_index - 2); // 不包括CRC-16字段
 
                 // 提取接收到的CRC-16 modbus校验码
-                uint16_t received_crc = (rx_buffer[rx_index - 2] << 8) | rx_buffer[rx_index - 1];
+                received_crc = (rx_buffer[rx_index - 2] << 8) | rx_buffer[rx_index - 1];
 
                 // 对比校验码
-                if (calculated_crc == received_crc) {
+                 if (calculated_crc == received_crc) {
                     // 校验成功，提取数据段
                     // 数据段从索引4开始，长度为(expected_length)
                     // 在这里处理数据段
@@ -202,12 +217,13 @@ void USART3_IRQHandler(void)
 										if(function_code == 0x31){			// 表示对绳驱电机的控制		
 												// 解析电机信息
 												uint16_t offset = 6; // 电机信息从索引6开始
-												uint8_t motor_address;	// 定义电机地址字段
 												for (uint8_t i = 0; i < 12; ++i) {
-														motor_address = rx_buffer[offset++]-1;	// 取得电机地址数据
-														snake_motor_position_control[motor_address] = (rx_buffer[offset] << 24) | (rx_buffer[offset + 1] << 16) | (rx_buffer[offset + 2] << 8) | rx_buffer[offset + 3];
+														motor_address[i] = rx_buffer[offset++]-1;	// 取得电机地址数据
+														snake_motor_position_control[i] = (rx_buffer[offset] << 24) | (rx_buffer[offset + 1] << 16) | (rx_buffer[offset + 2] << 8) | rx_buffer[offset + 3];
 														offset += 4;
 												}
+												
+
 												offset += 1;
 												gripper_gm6020_position_control = (rx_buffer[offset] << 8) | rx_buffer[offset + 1];
 												offset += 3;
@@ -218,6 +234,7 @@ void USART3_IRQHandler(void)
 												offset += 3;
 												reset_control = rx_buffer[offset++];	
 										}
+										
 										if(reset_control == 1){
 													// snake_motors失能和参数设定
 													for(uint8_t i=0;i<12;i++){
@@ -278,19 +295,24 @@ void USART3_IRQHandler(void)
 													reset_control = 0;
 										}
 																				
-                } else {
-                    // 校验失败，可能需要错误处理
-										// 这里是串口输出计算出来的crc校验码
-										Receive = (calculated_crc >> 8) & 0xFF;
-										TX2_Transmit_Start();
-										Receive = calculated_crc & 0xFF;
-										TX2_Transmit_Start();
+                } else 
+								{
+										// 校验失败，清空接收缓冲区
+//										for (uint16_t i = 0; i < 256; ++i) {
+//												rx_buffer[i] = 0;
+//										}
+										// 可能需要错误处理的代码
+										// ... [错误处理的代码]
+										// 重置接收缓冲区索引
+//										header_count = 0;
+//										rx_index = 0;
                 }
 
                 // 重置接收缓冲区索引
                 rx_index = 0;
             }
-        }
+				}
+				
     }
 		
 		

@@ -53,7 +53,6 @@ float PID_camera_yaw(float target_pos,float current_pos);
 float PID_camera_pitch(float target_pos,float current_pos);
 
 extern int16_t output_208_bodan,output_205,output_206;
-extern u8 newdata_flag,flag_Vw_Q;
 extern int16_t AHRS_Yaw_angle;
 extern float this_angle_Pitch,this_angle_Yaw,this_angle_Pitch_min,this_angle_Yaw_min,yaw_9050;
 extern u8 flag_2006_start;

@@ -26,67 +26,7 @@ void Gimbal_min_task(void *p_arg)    //原本为小云台的控制，后拆除，已不用
 	p_arg = p_arg;
 	while(1)
 	{
-//		MPU6050_42mm_ReadData();
-//		
-//		
-//		if(newdata_flag)
-//		{
-//			newdata_flag=0;
-//			X_distance=Camera_Distance*cos(Camera_Inc_Pitch*3.1415926/180)*sin(Camera_Inc_Yaw*3.1415926/180)-195.3;   //三角函数坐标系变换
-//			Y_distance=Camera_Distance*cos(Camera_Inc_Pitch*3.1415926/180)*cos(Camera_Inc_Yaw*3.1415926/180)-53.6;
-//			Z_distance=Camera_Distance*sin(Camera_Inc_Pitch*3.1415926/180)-124.7;
-//			distance_min=sqrt(X_distance*X_distance+Y_distance*Y_distance+Z_distance*Z_distance);
-//			Camera_Inc_Yaw_min=atan(X_distance/Y_distance)*180/3.1415926;
-//			Camera_Inc_Pitch_min=atan(Z_distance/sqrt(X_distance*X_distance+Y_distance*Y_distance))*180/3.1415926;			
-//			
-//			
-//			  flag_count_start_min=1;
-//				count_n1_min=0;
-//			 	limit_k_min=4*(fabs(Camera_Inc_Yaw_min)/28.0f)*(fabs(Camera_Inc_Yaw_min)/28.0f)*(fabs(Camera_Inc_Yaw_min)/28.0f)-6*(fabs(Camera_Inc_Yaw_min)/28.0f)*(fabs(Camera_Inc_Yaw_min)/28.0f)+3*(fabs(Camera_Inc_Yaw_min)/28.0f);
-//				limit_kk_min=4*(fabs(Camera_Inc_Pitch_min)/28.0f)*(fabs(Camera_Inc_Pitch_min)/28.0f)*(fabs(Camera_Inc_Pitch_min)/28.0f)-6*(fabs(Camera_Inc_Pitch_min)/28.0f)*(fabs(Camera_Inc_Pitch_min)/28.0f)+3*(fabs(Camera_Inc_Pitch_min)/28.0f);
-//	 			Output_Camera_Inc_Yaw_min=limit_k_min*Camera_PID_205_Position_min(Camera_Inc_Yaw_min);
-//				Output_Camera_Inc_Pitch_min=limit_kk_min*Camera_PID_206_Position_min(Camera_Inc_Pitch_min);		
-//		}
-//		  if(flag_count_start_min==1)  
-//	  	  {
-//	  	  	count_n1_min++;
-//	  	  }
-//		
-//		  if(count_n1_min>=5)
-//		  	{
-//		  		Output_Camera_Inc_Yaw_min=0;
-//		  		Output_Camera_Inc_Pitch_min=0;
-//		  	}
-////			target_angle_Yaw2 -=0.8*PID_camera_yaw_min(0,Output_Camera_Inc_Yaw_min);   //系数是根据帧率计算而得
-////			target_angle_Pitch2 -=0.8*PID_camera_pitch_min(0,Output_Camera_Inc_Pitch_min);
-//				yaw_mid-=0.8*PID_camera_yaw_min(0,Output_Camera_Inc_Yaw_min);
-//				if(yaw_mid<-Output_Camera_Inc_Yaw_min )yaw_mid=-Output_Camera_Inc_Yaw_min;
-//			
-//			
-//		if (target_angle_Pitch2>165)	          target_angle_Pitch2 = 165;
-//		else if (target_angle_Pitch2<140)	    target_angle_Pitch2 = 140;	
-//		if (target_angle_Yaw2>330)	            target_angle_Yaw2 = 330;
-//		else if (target_angle_Yaw2<230)	      target_angle_Yaw2 = 230;	
-//			
-//		output_207 = PID_207_Velocity(PID_207_Position(target_angle_Yaw2,this_angle_Yaw_min),MPU6050_42mm_Real_Data.Gyro_Z);
-//		output_209 = PID_209_Velocity(PID_209_Position(target_angle_Pitch2,this_angle_Pitch_min),MPU6050_42mm_Real_Data.Gyro_X);
-//		
-//		Gimbal_ESC_Send_Can2(output_209,0,0,0);
-//		Gimbal_ESC_Send_Can2_yaw(0,output_207,0,0);
-			
-			
-		
-		 
-		
-		
-//		if(TelCtrlData.switch_r==3 && speed_ready==0 && flag_Vshift==0)   //开关摩擦轮时静止拨弹轮
-//		{
-//			Chasis_ESC_Send_Can2(0,0,PID_203_Velocity_bodan(0,Bodan_203_t.velocity),0);
-//		}
-//		else if(speed_ready==1 && TIM2->CCR1<1600)
-//		{
-//			Chasis_ESC_Send_Can2(0,0,PID_203_Velocity_bodan(0,Bodan_203_t.velocity),0);
-//		}
+
 		
 		OSTimeDly(4,OS_OPT_TIME_PERIODIC,&err);
 	}
