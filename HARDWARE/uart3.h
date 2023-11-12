@@ -15,6 +15,7 @@ void tmr2_callback(void *p_tmr, void *p_arg);
 extern float Camera_Inc_Pitch,Camera_Inc_Yaw,Camera_Distance;
 
 extern int32_t snake_motor_position_control[12];
+extern int32_t snake_motor_speed_control[12];
 extern const uint16_t crc16_table[256];
 
 // gripper gm6020 µÄÎ»ÖÃ¿ØÖÆ

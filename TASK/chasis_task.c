@@ -36,6 +36,14 @@ void Chasis_task(void *p_arg)
 
 				if(reset_control != 1){
 					motorEnable(can_id,0x06,0x01,0x0F,0x00,0x00,0x00,0x01); // 工作模式为1
+					// 分解 int32_t 变量为4个字节
+					bytes[0] = (snake_motor_speed_control[i] >> 24) & 0xFF;  // 最高有效字节 (MSB)
+					bytes[1] = (snake_motor_speed_control[i] >> 16) & 0xFF;  // 次高有效字节
+					bytes[2] = (snake_motor_speed_control[i] >> 8) & 0xFF;   // 次低有效字节
+					bytes[3] = (snake_motor_speed_control[i]) & 0xFF;          // 最低有效字节 (LSB)
+					if(time_counter >= 100){
+						setMotorTargetSpeed(can_id,0x06,0x01,0x09,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
+					}
 					delay_us(200);
 					// 分解 int32_t 变量为4个字节
 					bytes[0] = ((snake_motor_position_control[i] + offsetPosition_snake[i]) >> 24) & 0xFF;  // 最高有效字节 (MSB)
@@ -44,12 +52,17 @@ void Chasis_task(void *p_arg)
 					bytes[3] = (snake_motor_position_control[i] + offsetPosition_snake[i]) & 0xFF;          // 最低有效字节 (LSB)
 					if(time_counter >= 100){
 						setMotorTargetPosition(can_id,0x06,0x01,0x0A,bytes[0],bytes[1],bytes[2],bytes[3]); //设定目标位置值，32位有符号数；
-					}						
+					}
+					delay_us(200);													
 				}
 
 				delay_us(200);
 				// reading the encorder
 				readSnakeEncorder(can_id,0x02,0x03,0x07);
+				
+				delay_us(200);
+				// 读取速度值
+				readSnakeSpeed(can_id,0x02,0x03,0x06);
 			}
 			
 /************************************************************* 
@@ -71,7 +84,7 @@ void Chasis_task(void *p_arg)
 			// sensors data
 			int idx = 6;
 			for (int i = 0; i < 12; ++i) {
-					packet[idx++] = i + 1;  // encorder addresss
+					packet[idx++] = currentSpeed_snake[i] & 0xFF;  // 绳驱电机速度 RPM
 					// encorder data
 					packet[idx++] = ((currentPosition_snake[i]) >> 24) & 0xFF;  
 					packet[idx++] = ((currentPosition_snake[i]) >> 16) & 0xFF;

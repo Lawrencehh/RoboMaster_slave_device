@@ -21,6 +21,7 @@ int flag;
 int16_t receive[4];
 int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 int32_t offsetPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+uint8_t currentSpeed_snake[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
 
 int32_t time_counter; //用于排除前期的不可靠数据
 
@@ -141,73 +142,109 @@ void CAN1_RX0_IRQHandler(void)
 							case 0x01:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[0];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[0]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[0];	
 								}
 							}break;	
 							case 0x02:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[1];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[1]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[1];
 								}
 							}break;	
 							case 0x03:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[2];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[2]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[2];
 								}
 							}break;	
 							case 0x04:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[3];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[3]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[3];
 								}
 							}break;	
 							case 0x05:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[4];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[4]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[4];
 								}
 							}break;	
 							case 0x06:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[5];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[5]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[5];
 								}
 							}break;	
 							case 0x07:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[6];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[6]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[6];
 								}
 							}break;	
 							case 0x08:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[7];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[7]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[7];
 								}
 							}break;	
 							case 0x09:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[8];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[8]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[8];
 								}
 							}break;	
 							case 0x0A:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[9];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[9]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[9];
 								}
 							}break;	
 							case 0x0B:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[10];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[10]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[10];
 								}
 							}break;	
 							case 0x0C:   //id
 							{
 								if(rx_message.Data[0]==0x04){
-									currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[11];
+									if(rx_message.Data[1]==0x06)
+										currentSpeed_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) * 60 / 65536;
+									if(rx_message.Data[1]==0x07)
+										currentPosition_snake[11]= ((rx_message.Data[2]<<24)|(rx_message.Data[3]<<16)|(rx_message.Data[4]<<8)|rx_message.Data[5]) - offsetPosition_snake[11];
 								}
 							}break;	
 							
@@ -269,6 +306,21 @@ void Chasis_ESC_Send(int16_t current_201,int16_t current_202,int16_t current_203
 
 // 发送读取绳驱电机编码器指令
 void readSnakeEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1)	
+{
+    CanTxMsg tx_message;
+  
+    tx_message.StdId = STdId;
+    tx_message.IDE = CAN_Id_Standard;
+    tx_message.RTR = CAN_RTR_Data;
+    tx_message.DLC = dlc;
+    
+    tx_message.Data[0] = D0;
+    tx_message.Data[1] = D1;
+    CAN_Transmit(CAN1,&tx_message);
+}
+
+// 发送读取绳驱电机编码器指令
+void readSnakeSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1)	
 {
     CanTxMsg tx_message;
   

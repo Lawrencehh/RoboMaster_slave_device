@@ -126,12 +126,13 @@ uint16_t received_crc;
 u8 Receive;
 
 uint8_t controller_address; // 控制器地址
-uint8_t motor_address[12];	// 定义电机地址
+
 uint8_t function_code;      // 功能码
 
 // 初始化电机信息数组，每个绳驱电机有一个地址和一个速度
 // 假设最多有12个电机（单臂蛇形连续体）
 int32_t snake_motor_position_control[12];	// 存放12个绳驱电机位置控制指令
+int32_t snake_motor_speed_control[12];	// 电机速度
 // gripper gm6020 的位置控制
 int16_t gripper_gm6020_position_control = 0;
 // gripper c610 的位置控制
@@ -139,16 +140,16 @@ int16_t gripper_c610_position_control = 0;
 // gripper sts3032 的位置控制
 int16_t gripper_sts3032_position_control = 0;
 int16_t last_sts3032_control_value = 0;
-// 传感器清零控制
+// 状态控制
 int16_t reset_control = 0;
-
+int16_t last_reset_control = 0;
 int16_t gripper_gm6020_position_reset_offset = 0;
 int16_t gripper_c610_position_reset_offset = 0;
 int16_t gripper_sts3032_position_reset_offset = 0;
 
 
 // 初始化变量
-uint8_t header_sequence[] = {0xAA, 0x55, 0x01, 0x4B, 0x31, 0x10, 0x01}; // 新的固定帧头序列
+uint8_t header_sequence[] = {0xAA, 0x55, 0x01, 0x4B, 0x31, 0x10}; // 新的固定帧头序列
 uint8_t header_match_index = 0; // 用于跟踪帧头匹配的位置
 
 
@@ -218,7 +219,7 @@ void USART3_IRQHandler(void)
 												// 解析电机信息
 												uint16_t offset = 6; // 电机信息从索引6开始
 												for (uint8_t i = 0; i < 12; ++i) {
-														motor_address[i] = rx_buffer[offset++]-1;	// 取得电机地址数据
+														snake_motor_speed_control[i] = rx_buffer[offset++] * 65536 / 60;	// 取得电机速度数据, 从rpm转为pulse per second
 														snake_motor_position_control[i] = (rx_buffer[offset] << 24) | (rx_buffer[offset + 1] << 16) | (rx_buffer[offset + 2] << 8) | rx_buffer[offset + 3];
 														offset += 4;
 												}
@@ -268,6 +269,7 @@ void USART3_IRQHandler(void)
 													}		
 													reset_control = 0;
 										}
+										
 										if(reset_control == 6){
 													// snake_motors失能和参数设定
 													for(uint8_t i=0;i<12;i++){
@@ -294,8 +296,9 @@ void USART3_IRQHandler(void)
 													}		
 													reset_control = 0;
 										}
-																				
-                } else 
+																											
+                }
+								 else 
 								{
 										// 校验失败，清空接收缓冲区
 //										for (uint16_t i = 0; i < 256; ++i) {

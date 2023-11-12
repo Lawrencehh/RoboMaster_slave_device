@@ -19,6 +19,7 @@ void readMotorCurrentValue(u8 STdId,u8 dlc,u8 D0,u8 D1);
 void setMotorPositionOffset(u8 STdId,u8 dlc,u8 D0,u8 D1,u8 D2,u8 D3,u8 D4,u8 D5);
 
 void readSnakeEncorder(u8 STdId,u8 dlc,u8 D0,u8 D1); //读取绳驱电机的编码器值
+void readSnakeSpeed(u8 STdId,u8 dlc,u8 D0,u8 D1); // 读取绳驱电机速度值	
 
 void GM6020_Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4); // GM6020关节电机控制
 void C610_Can_Send_Msg(int16_t current_1,int16_t current_2,int16_t current_3,int16_t current_4); // C610关节电机控制
@@ -43,6 +44,7 @@ extern int32_t round_6020_yaw;
 extern float phase_6020_yaw;
 extern int32_t currentPosition_snake[12];
 extern int32_t offsetPosition_snake[12];
+extern uint8_t currentSpeed_snake[12];
 
 extern int32_t GM6020_absolute_position;  // 绝对位置
 extern int16_t GM6020_last_raw_position;  // 上一次的原始位置（0-8191）
