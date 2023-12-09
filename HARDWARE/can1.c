@@ -21,7 +21,7 @@ int flag;
 int16_t receive[4];
 int32_t currentPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
 int32_t offsetPosition_snake[12]={0,0,0,0,0,0,0,0,0,0,0,0};
-uint8_t currentSpeed_snake[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+int8_t currentSpeed_snake[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
 
 int32_t time_counter; //用于排除前期的不可靠数据
 

@@ -76,7 +76,7 @@ void GM6020_update_pid() {
 
 int32_t PID_GM6020_Velocity(int32_t target_velocity,int32_t current_velocity) 
 {
-	const float Kp =10;  //16.5
+	const float Kp = 1;  //16.5
 	const float Ki=0;   //0.03
 	const float Kd =0.0f;
     

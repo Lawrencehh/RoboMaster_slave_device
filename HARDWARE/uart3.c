@@ -246,12 +246,13 @@ void USART3_IRQHandler(void)
 													// snake_motors_encorders_offset的重新整定
 													for(uint8_t i=0;i<12;i++){
 															offsetPosition_snake[i] = currentPosition_snake[i] + offsetPosition_snake[i];													
-													}					
-													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
-													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
-													GM6020_rotation_count = 0;
-													C610_rotation_count = 0;
-													gripper_sts3032_position_reset_offset = last_sts3032_control_value + gripper_sts3032_position_reset_offset;
+													}			
+														// 去除手部清零功能
+//													gripper_gm6020_position_reset_offset = GripperMotor_205_t.position;
+//													gripper_c610_position_reset_offset = GripperMotor_201_t.position;
+//													GM6020_rotation_count = 0;
+//													C610_rotation_count = 0;
+//													gripper_sts3032_position_reset_offset = last_sts3032_control_value + gripper_sts3032_position_reset_offset;
 																
 													// snake_motors使能和参数设定
 													for(uint8_t i=0;i<12;i++){
